@@ -1,13 +1,23 @@
 import { initializeApp } from "firebase/app";
 
+import {
+  firebase_apiKey,
+  firebase_appId,
+  firebase_authDomain,
+  firebase_measurementId,
+  firebase_messagingSenderId,
+  firebase_projectId,
+  firebase_storageBucket,
+} from "@/utils/constants/app_config";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyARK58x30wkMWf0mANs8ifooW3_zaVnvQA",
-  authDomain: "blogify-9a1bd.firebaseapp.com",
-  projectId: "blogify-9a1bd",
-  storageBucket: "blogify-9a1bd.appspot.com",
-  messagingSenderId: "937430904324",
-  appId: "1:937430904324:web:a38bf7a2beccbe99378f51",
-  measurementId: "G-4KD0406J64",
+  apiKey: firebase_apiKey,
+  authDomain: firebase_authDomain,
+  projectId: firebase_projectId,
+  storageBucket: firebase_storageBucket,
+  messagingSenderId: firebase_messagingSenderId,
+  appId: firebase_appId,
+  measurementId: firebase_measurementId,
 };
 
 const app = initializeApp(firebaseConfig);
