@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
+import { setUser } from "@/store/user";
 import { authApi } from "@/utils/firebase/auth";
 
 import { PrimaryButton } from "../Buttons";
@@ -7,6 +9,7 @@ import InputField from "../InputBox";
 import StyledLoginSignup from "./StyledLoginSignup";
 
 function LoginSignup({ activeForm = "login" }) {
+  const dispatch = useDispatch();
   const [loginDetails, setLoginDetails] = useState({
     email: "",
     password: "",
@@ -16,8 +19,13 @@ function LoginSignup({ activeForm = "login" }) {
     setLoginDetails({ ...loginDetails, [e.target.name]: e.target.value });
   };
 
-  const onClickSubmit = () => {
-    authApi.createUser(loginDetails);
+  const onClickSubmit = async () => {
+    const data =
+      activeForm === "login"
+        ? await authApi.loginUser(loginDetails)
+        : await authApi.createUser(loginDetails);
+
+    dispatch(setUser(data));
   };
   return (
     <StyledLoginSignup>
