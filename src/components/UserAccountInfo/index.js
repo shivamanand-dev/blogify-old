@@ -17,12 +17,12 @@ function UserAccountInfo({ src, name, email, follower, following }) {
 
   // eslint-disable-next-line no-unused-vars
   const { currentUser, logout } = useAuth();
-  const swichProfileModal = () => {
+  const switchProfileModal = () => {
     setEditProfile(!editProfile);
   };
 
   const onClickSaveName = async () => {
-    swichProfileModal();
+    switchProfileModal();
     // console.log("sadf");
     await authApi.updateUser(displayName);
   };
@@ -37,7 +37,7 @@ function UserAccountInfo({ src, name, email, follower, following }) {
               {name}
               <PrimaryButton
                 buttonText=""
-                onClick={swichProfileModal}
+                onClick={switchProfileModal}
                 startIcon={<EditIcon />}
                 variant="text"
               />
@@ -79,7 +79,7 @@ function UserAccountInfo({ src, name, email, follower, following }) {
 
       {/* <UpdateProfileModal
         isOpen={editProfileModal}
-        handleClose={swichProfileModal}
+        handleClose={switchProfileModal}
       /> */}
 
       <PrimaryButton
