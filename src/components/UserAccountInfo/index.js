@@ -1,19 +1,14 @@
 import { Typography } from "@mui/material";
 
-// import Picture from "@/components/Picture";
+import Picture from "@/components/Picture";
+
 import { StyledUserAccountInfo } from "./StyledUserAccountInfo";
 
-function UserAccountInfo({
-  // src,
-  name,
-  userName,
-  follower,
-  following,
-}) {
+function UserAccountInfo({ src, name, userName, follower, following }) {
   return (
     <StyledUserAccountInfo>
       <div className="flex">
-        {/* <Picture src={src} rounded={true} /> */}
+        <Picture src={src} rounded={true} />
         <div>
           <Typography variant="h4" ml={3}>
             {name}
