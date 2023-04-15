@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -10,6 +11,7 @@ import StyledLoginSignup from "./StyledLoginSignup";
 
 function LoginSignup({ activeForm = "login" }) {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [loginDetails, setLoginDetails] = useState({
     email: "",
     password: "",
@@ -26,6 +28,9 @@ function LoginSignup({ activeForm = "login" }) {
         : await authApi.createUser(loginDetails);
 
     dispatch(setUser(data));
+    if (data) {
+      router.push("/feed");
+    }
   };
   return (
     <StyledLoginSignup>

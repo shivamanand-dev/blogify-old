@@ -21,7 +21,7 @@ const afterAuth = async (userCredential) => {
 const createUser = async (data) => {
   return await createUserWithEmailAndPassword(auth, data.email, data.password)
     .then(async (userCredential) => {
-      await afterAuth(userCredential);
+      return await afterAuth(userCredential);
     })
     // eslint-disable-next-line no-unused-vars
     .catch((error) => {});
