@@ -5,8 +5,8 @@ import { useState } from "react";
 
 import Picture from "@/components/Picture";
 import { useAuth } from "@/context/AuthContext";
-import { authApi } from "@/utils/firebase/auth";
 
+// import { authApi } from "@/utils/firebase/auth";
 import { PrimaryButton } from "../Buttons";
 import { StyledUserAccountInfo } from "./StyledUserAccountInfo";
 // import { signOut } from "firebase/auth";
@@ -16,7 +16,7 @@ function UserAccountInfo({ src, name, email, follower, following }) {
   const [displayName, setDisplayName] = useState(name);
 
   // eslint-disable-next-line no-unused-vars
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout, updateUser } = useAuth();
   const switchProfileModal = () => {
     setEditProfile(!editProfile);
   };
@@ -24,7 +24,7 @@ function UserAccountInfo({ src, name, email, follower, following }) {
   const onClickSaveName = async () => {
     switchProfileModal();
     // console.log("sadf");
-    await authApi.updateUser(displayName);
+    await updateUser(displayName);
   };
   // console.log(currentUser);
   return (

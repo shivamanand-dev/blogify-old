@@ -8,6 +8,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 
 const auth = getAuth(app);
@@ -36,13 +37,23 @@ export function AuthProvider({ children }) {
     return auth.sendPasswordResetEmail(email);
   }
 
-  function updateEmail(email) {
-    return currentUser.updateEmail(email);
-  }
+  //   function updateEmail(email) {
+  //     return currentUser.updateEmail(email);
+  //   }
 
   function updatePassword(password) {
     return currentUser.updatePassword(password);
   }
+
+  const updateUser = async (displayName, photoURL) => {
+    updateProfile(auth.currentUser, {
+      displayName: displayName,
+      photoURL: photoURL,
+    }).catch((error) => {
+      // eslint-disable-next-line no-console
+      console.log(error);
+    });
+  };
 
   useEffect(() => {
     return auth.onAuthStateChanged((user) => {
@@ -57,7 +68,8 @@ export function AuthProvider({ children }) {
     signup,
     logout,
     resetPassword,
-    updateEmail,
+    updateUser,
+    // updateEmail,
     updatePassword,
   };
 
