@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import createUser from "@/utils/firebase/auth";
+import { authApi } from "@/utils/firebase/auth";
 
 import { PrimaryButton } from "../Buttons";
 import InputField from "../InputBox";
@@ -17,7 +17,7 @@ function LoginSignup({ activeForm = "login" }) {
   };
 
   const onClickSubmit = () => {
-    createUser(loginDetails);
+    authApi.createUser(loginDetails);
   };
   return (
     <StyledLoginSignup>

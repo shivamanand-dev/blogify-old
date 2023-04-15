@@ -23,4 +23,4 @@ const createUser = (data) => {
     });
 };
 
-export default createUser;
+export const authApi = { createUser };
