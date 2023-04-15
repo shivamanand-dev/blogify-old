@@ -1,0 +1,10 @@
+body {
+  background: #3c3c3c;
+  margin: 0;
+  color: #eeeeee;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
