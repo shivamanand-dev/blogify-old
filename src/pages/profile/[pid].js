@@ -12,13 +12,13 @@ function Profile() {
     <StyledProfile>
       <UserAccountInfo
         src={
-          state?.profileImageUrl ||
+          state?.user?.profileImageUrl ||
           "https://firebasestorage.googleapis.com/v0/b/blogify-9a1bd.appspot.com/o/anonymous.png?alt=media&token=4b23045c-6f36-4054-a026-02922bff24c6"
         }
-        name={state?.name || "Anonymous"}
-        userName={state?.username || "Anonymous"}
-        follower={state?.followers?.length || "Anonymous"}
-        following={state?.following?.length || "Anonymous"}
+        name={state?.user?.name || "Anonymous"}
+        email={state?.user?.email || "Anonymous"}
+        follower={state?.user?.followers?.length || "0"}
+        following={state?.user?.following?.length || "0"}
       />
     </StyledProfile>
   );
