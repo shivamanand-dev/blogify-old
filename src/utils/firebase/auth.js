@@ -1,7 +1,13 @@
+/* eslint-disable no-unused-vars */
 import {
+  browserLocalPersistence,
   createUserWithEmailAndPassword,
   getAuth,
+  onAuthStateChanged,
+  setPersistence,
   signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
 } from "firebase/auth";
 
 import { userService } from "../services/user.services";
@@ -23,17 +29,32 @@ const createUser = async (data) => {
     .then(async (userCredential) => {
       return await afterAuth(userCredential);
     })
-    // eslint-disable-next-line no-unused-vars
     .catch((error) => {});
 };
 
 const loginUser = async (data) => {
-  return await signInWithEmailAndPassword(auth, data.email, data.password)
-    .then(async (userCredential) => {
-      return await afterAuth(userCredential);
+  return await setPersistence(auth, browserLocalPersistence)
+    .then(async () => {
+      return await signInWithEmailAndPassword(auth, data.email, data.password);
     })
-    // eslint-disable-next-line no-unused-vars
     .catch((error) => {});
 };
 
-export const authApi = { createUser, loginUser };
+const updateUser = async (displayName, photoURL) => {
+  updateProfile(auth.currentUser, {
+    displayName: displayName,
+    photoURL: photoURL,
+  })
+    .then((res) => {
+      // Profile updated!
+      // console.log("fdsf");
+      // console.log(res);
+      return res;
+    })
+    .catch((error) => {
+      // An error occurred
+      // ...
+    });
+};
+
+export const authApi = { createUser, loginUser, updateUser };

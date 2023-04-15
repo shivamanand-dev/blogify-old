@@ -4,16 +4,29 @@ import { Typography } from "@mui/material";
 import { useState } from "react";
 
 import Picture from "@/components/Picture";
+import { useAuth } from "@/context/AuthContext";
+import { authApi } from "@/utils/firebase/auth";
 
 import { PrimaryButton } from "../Buttons";
 import { StyledUserAccountInfo } from "./StyledUserAccountInfo";
+// import { signOut } from "firebase/auth";
 
 function UserAccountInfo({ src, name, email, follower, following }) {
   const [editProfile, setEditProfile] = useState(false);
+  const [displayName, setDisplayName] = useState(name);
 
+  // eslint-disable-next-line no-unused-vars
+  const { currentUser, logout } = useAuth();
   const swichProfileModal = () => {
     setEditProfile(!editProfile);
   };
+
+  const onClickSaveName = async () => {
+    swichProfileModal();
+    // console.log("sadf");
+    await authApi.updateUser(displayName);
+  };
+  // console.log(currentUser);
   return (
     <StyledUserAccountInfo>
       <div className="flex">
@@ -35,11 +48,14 @@ function UserAccountInfo({ src, name, email, follower, following }) {
               <input
                 type="text"
                 style={{ marginLeft: "24px", padding: "0.4rem" }}
-                value={name}
+                value={displayName}
+                onChange={(e) => {
+                  setDisplayName(e.target.value);
+                }}
               />
               <PrimaryButton
                 buttonText=""
-                onClick={swichProfileModal}
+                onClick={onClickSaveName}
                 startIcon={<DoneIcon />}
                 variant="text"
               />
@@ -65,6 +81,13 @@ function UserAccountInfo({ src, name, email, follower, following }) {
         isOpen={editProfileModal}
         handleClose={swichProfileModal}
       /> */}
+
+      <PrimaryButton
+        buttonText="lo"
+        onClick={() => {
+          logout();
+        }}
+      />
     </StyledUserAccountInfo>
   );
 }
