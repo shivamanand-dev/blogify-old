@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 
 import { AuthProvider } from "@/context/AuthContext";
-import store from "@/store/store";
+import store from "@/redux/store";
 // import Navbar from "@/components/Navbar";
 import theme from "@/utils/Theme/theme";
 
