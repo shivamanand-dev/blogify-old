@@ -1,10 +1,11 @@
-import DoneIcon from "@mui/icons-material/Done";
+// import DoneIcon from "@mui/icons-material/Done";
 import EditIcon from "@mui/icons-material/Edit";
 import { Typography } from "@mui/material";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 import Picture from "@/components/Picture";
-import { useAuth } from "@/context/AuthContext";
+import { authApi } from "@/utils/firebase/auth";
 
 // import { authApi } from "@/utils/firebase/auth";
 import { PrimaryButton } from "../Buttons";
@@ -12,20 +13,22 @@ import { StyledUserAccountInfo } from "./StyledUserAccountInfo";
 // import { signOut } from "firebase/auth";
 
 function UserAccountInfo({ src, name, email, follower, following }) {
+  const router = useRouter();
+
   const [editProfile, setEditProfile] = useState(false);
   const [displayName, setDisplayName] = useState(name);
 
   // eslint-disable-next-line no-unused-vars
-  const { currentUser, logout, updateUser } = useAuth();
+  // const { logout, updateUser } = useAuth();
   const switchProfileModal = () => {
     setEditProfile(!editProfile);
   };
 
-  const onClickSaveName = async () => {
-    switchProfileModal();
-    // console.log("sadf");
-    await updateUser(displayName);
-  };
+  // const onClickSaveName = async () => {
+  //   switchProfileModal();
+  //   // console.log("sadf");
+  //   await updateUser(displayName);
+  // };
   // console.log(currentUser);
   return (
     <StyledUserAccountInfo>
@@ -53,12 +56,12 @@ function UserAccountInfo({ src, name, email, follower, following }) {
                   setDisplayName(e.target.value);
                 }}
               />
-              <PrimaryButton
+              {/* <PrimaryButton
                 buttonText=""
                 onClick={onClickSaveName}
                 startIcon={<DoneIcon />}
                 variant="text"
-              />
+              /> */}
             </>
           )}
 
@@ -85,7 +88,8 @@ function UserAccountInfo({ src, name, email, follower, following }) {
       <PrimaryButton
         buttonText="lo"
         onClick={() => {
-          logout();
+          authApi.logout();
+          router.push("/login");
         }}
       />
     </StyledUserAccountInfo>

@@ -1,7 +1,9 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
-import { useAuth } from "@/context/AuthContext";
+import { setUser } from "@/redux/userSlice";
+import { authApi } from "@/utils/firebase/auth";
 
 import { PrimaryButton } from "../Buttons";
 import InputField from "../InputBox";
@@ -9,7 +11,7 @@ import StyledLoginSignup from "./StyledLoginSignup";
 
 function LoginSignup({ activeForm = "login" }) {
   const router = useRouter();
-  const { login, signup } = useAuth();
+  const dispatch = useDispatch();
 
   const [loginDetails, setLoginDetails] = useState({
     email: "",
@@ -23,10 +25,11 @@ function LoginSignup({ activeForm = "login" }) {
   const onClickSubmit = async () => {
     const data =
       activeForm === "login"
-        ? await login(loginDetails)
-        : await signup(loginDetails);
+        ? await authApi.loginUser(loginDetails)
+        : await authApi.createUser(loginDetails);
 
     if (data) {
+      dispatch(setUser(data));
       router.push("/feed");
     }
   };
