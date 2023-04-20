@@ -2,6 +2,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 
 // import { userService } from "../services/user.services";
@@ -30,9 +31,29 @@ const loginUser = async (data) => {
     .catch((error) => {});
 };
 
+const updateUser = async (displayName) => {
+  return await updateProfile(auth.currentUser, {
+    displayName: displayName,
+  }).catch((error) => {
+    // eslint-disable-next-line no-console
+    console.log(error);
+  });
+};
+
+const updateUserData = (dispatch, setUser) => {
+  return auth.onAuthStateChanged((user) => {
+    dispatch(setUser(user));
+  });
+};
 const logout = async () => {
   localStorage.removeItem("persist:root");
   return auth.signOut();
 };
 
-export const authApi = { createUser, loginUser, logout };
+export const authApi = {
+  createUser,
+  loginUser,
+  updateUser,
+  updateUserData,
+  logout,
+};

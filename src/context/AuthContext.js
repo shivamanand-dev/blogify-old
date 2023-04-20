@@ -4,7 +4,7 @@ import app from "@/utils/firebase";
 
 const AuthContext = React.createContext();
 
-import { getAuth, updateProfile } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
 const auth = getAuth(app);
 
@@ -28,16 +28,6 @@ export function AuthProvider({ children }) {
     return currentUser.updatePassword(password);
   }
 
-  const updateUser = async (displayName, photoURL) => {
-    updateProfile(auth.currentUser, {
-      displayName: displayName,
-      photoURL: photoURL,
-    }).catch((error) => {
-      // eslint-disable-next-line no-console
-      console.log(error);
-    });
-  };
-
   useEffect(() => {
     return auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
@@ -49,7 +39,6 @@ export function AuthProvider({ children }) {
     currentUser,
     // login,
     resetPassword,
-    updateUser,
     // updateEmail,
     updatePassword,
   };
