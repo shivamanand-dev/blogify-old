@@ -2,11 +2,13 @@ import DoneIcon from "@mui/icons-material/Done";
 import EditIcon from "@mui/icons-material/Edit";
 import { Typography } from "@mui/material";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import Picture from "@/components/Picture";
-import { useAuth } from "@/context/AuthContext";
+import { setUser } from "@/redux/userSlice";
 import { authApi } from "@/utils/firebase/auth";
 
+// import { authApi } from "@/utils/firebase/auth";
 import { PrimaryButton } from "../Buttons";
 import { StyledUserAccountInfo } from "./StyledUserAccountInfo";
 // import { signOut } from "firebase/auth";
@@ -15,8 +17,9 @@ function UserAccountInfo({ src, name, email, follower, following }) {
   const [editProfile, setEditProfile] = useState(false);
   const [displayName, setDisplayName] = useState(name);
 
+  const dispatch = useDispatch();
+
   // eslint-disable-next-line no-unused-vars
-  const { currentUser, logout } = useAuth();
   const switchProfileModal = () => {
     setEditProfile(!editProfile);
   };
@@ -25,8 +28,9 @@ function UserAccountInfo({ src, name, email, follower, following }) {
     switchProfileModal();
     // console.log("sadf");
     await authApi.updateUser(displayName);
+    authApi.updateUserData(dispatch, setUser);
   };
-  // console.log(currentUser);
+
   return (
     <StyledUserAccountInfo>
       <div className="flex">
@@ -76,18 +80,6 @@ function UserAccountInfo({ src, name, email, follower, following }) {
           Following: {following}
         </Typography>
       </div>
-
-      {/* <UpdateProfileModal
-        isOpen={editProfileModal}
-        handleClose={switchProfileModal}
-      /> */}
-
-      <PrimaryButton
-        buttonText="lo"
-        onClick={() => {
-          logout();
-        }}
-      />
     </StyledUserAccountInfo>
   );
 }

@@ -1,13 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const initialState = {
-  user: null,
-};
-
 export const userSlice = createSlice({
   name: "user",
   initialState: {
     user: null,
+    fetchStatus: "",
   },
 
   reducers: {
