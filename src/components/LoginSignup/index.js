@@ -29,7 +29,7 @@ function LoginSignup({ activeForm = "login" }) {
         : await authApi.createUser(loginDetails);
 
     if (data) {
-      dispatch(setUser(data));
+      dispatch(setUser(data.user));
       router.push("/feed");
     }
   };

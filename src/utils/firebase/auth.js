@@ -47,7 +47,7 @@ const updateUserData = (dispatch, setUser) => {
 };
 const logout = async () => {
   localStorage.removeItem("persist:root");
-  return auth.signOut();
+  return await auth.signOut();
 };
 
 export const authApi = {
