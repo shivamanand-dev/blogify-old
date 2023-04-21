@@ -8,9 +8,11 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { ThemeProvider } from "styled-components";
 
+import MainNavbar from "@/components/MainNavbar";
 // import { AuthProvider } from "@/context/AuthContext";
 import { persistor, store } from "@/redux/store";
 import app from "@/utils/firebase";
+import { authApi } from "@/utils/firebase/auth";
 import theme from "@/utils/Theme/theme";
 
 export default function App({ Component, pageProps }) {
@@ -20,6 +22,7 @@ export default function App({ Component, pageProps }) {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (!user) {
+        authApi.logout();
         router.push("/login");
       }
     });
@@ -32,7 +35,7 @@ export default function App({ Component, pageProps }) {
       <PersistGate persistor={persistor} loading={null}>
         <ThemeProvider theme={theme}>
           <NoSsr>
-            {/* <Navbar /> */}
+            <MainNavbar />
             <div style={{ height: "64px" }}></div>
             <Container>
               <Component {...pageProps} />
