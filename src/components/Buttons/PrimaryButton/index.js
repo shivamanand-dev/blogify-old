@@ -10,6 +10,7 @@ function PrimaryButton({
   fullWidth,
   startIcon,
   endIcon,
+  customStyle,
 }) {
   return (
     <Button
@@ -21,6 +22,7 @@ function PrimaryButton({
       fullWidth={fullWidth}
       startIcon={startIcon}
       endIcon={endIcon}
+      sx={customStyle}
     >
       {buttonText}
     </Button>

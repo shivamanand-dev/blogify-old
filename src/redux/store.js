@@ -13,17 +13,18 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
-import userReducer from "./user";
+import userReducer from "./userSlice";
+
+const reducers = {
+  user: userReducer,
+};
 
 const persistConfig = {
   key: "root",
   storage,
 };
 
-const rootReducer = combineReducers({
-  user: userReducer,
-});
-
+const rootReducer = combineReducers(reducers);
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const makeStore = () =>
@@ -42,14 +43,12 @@ export const makeStore = () =>
             REGISTER,
             REHYDRATE,
           ],
-          ignoredActionPaths: ["payload", "editor"],
+          ignoredActionPaths: ["payload", "user"],
           ignoredPaths: ["user.user"],
         },
       }),
   });
 
 export const store = makeStore();
-export const persistor = persistStore(store);
-
 export const StoreWrapper = createWrapper(makeStore, { debug: true });
-export default store;
+export const persistor = persistStore(store);
