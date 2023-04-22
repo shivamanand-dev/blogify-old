@@ -31,7 +31,9 @@ function LoginSignup({ activeForm = "login" }) {
 
     if (data.user) {
       if (activeForm === "signUp") {
-        await firestoreApi.addDocument("user", data.user.email, {
+        const username = data.user.email.split("@")[0];
+        await firestoreApi.addDocument("user", username, {
+          username: username,
           email: data.user.email,
           uid: data.user.uid,
         });
