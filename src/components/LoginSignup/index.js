@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { setUser } from "@/redux/userSlice";
 import { authApi } from "@/utils/firebase/auth";
+import { firestoreApi } from "@/utils/firebase/firestore";
 
 import { PrimaryButton } from "../Buttons";
 import InputField from "../InputBox";
@@ -28,9 +29,15 @@ function LoginSignup({ activeForm = "login" }) {
         ? await authApi.loginUser(loginDetails)
         : await authApi.createUser(loginDetails);
 
-    if (data) {
+    if (data.user) {
+      if (activeForm === "signUp") {
+        await firestoreApi.addDocument();
+      }
+
       dispatch(setUser(data.user));
       router.push("/feed");
+    } else {
+      alert(data);
     }
   };
   return (

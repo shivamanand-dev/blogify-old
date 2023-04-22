@@ -10,33 +10,31 @@ import app from ".";
 
 const auth = getAuth(app);
 
-// const afterAuth = async (userCredential) => {
-//   // Signed in
-//   const user = userCredential.user;
-//   await userService.saveToken(user.accessToken);
-
-//   return user;
-//   // ...
-// };
-
 const createUser = async (data) => {
-  return await createUserWithEmailAndPassword(auth, data.email, data.password)
-    // eslint-disable-next-line no-unused-vars
-    .catch((error) => {});
+  return await createUserWithEmailAndPassword(
+    auth,
+    data.email,
+    data.password
+  ).catch((error) => {
+    return error;
+  });
 };
 
 const loginUser = async (data) => {
-  return await signInWithEmailAndPassword(auth, data.email, data.password)
-    // eslint-disable-next-line no-unused-vars
-    .catch((error) => {});
+  return await signInWithEmailAndPassword(
+    auth,
+    data.email,
+    data.password
+  ).catch((error) => {
+    return error.code;
+  });
 };
 
 const updateUser = async (displayName) => {
   return await updateProfile(auth.currentUser, {
     displayName: displayName,
   }).catch((error) => {
-    // eslint-disable-next-line no-console
-    console.log(error);
+    return error;
   });
 };
 
