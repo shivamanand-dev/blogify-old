@@ -31,7 +31,10 @@ function LoginSignup({ activeForm = "login" }) {
 
     if (data.user) {
       if (activeForm === "signUp") {
-        await firestoreApi.addDocument();
+        await firestoreApi.addDocument("user", data.user.email, {
+          email: data.user.email,
+          uid: data.user.uid,
+        });
       }
 
       dispatch(setUser(data.user));
