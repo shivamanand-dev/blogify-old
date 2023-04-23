@@ -2,10 +2,8 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
-  updateProfile,
 } from "firebase/auth";
 
-// import { userService } from "../services/user.services";
 import app from ".";
 
 const auth = getAuth(app);
@@ -30,28 +28,13 @@ const loginUser = async (data) => {
   });
 };
 
-const updateUser = async (displayName) => {
-  return await updateProfile(auth.currentUser, {
-    displayName: displayName,
-  }).catch((error) => {
-    return error;
-  });
-};
-
-const updateUserData = (dispatch, setUser) => {
-  return auth.onAuthStateChanged((user) => {
-    dispatch(setUser(user));
-  });
-};
 const logout = async () => {
   localStorage.removeItem("persist:root");
-  return await auth.signOut();
+  await auth.signOut();
 };
 
 export const authApi = {
   createUser,
   loginUser,
-  updateUser,
-  updateUserData,
   logout,
 };

@@ -1,12 +1,30 @@
-import { doc, getFirestore, setDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  getFirestore,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 import app from ".";
 
 const db = getFirestore(app);
 
-const addDocument = async (collectionName, emailId, data) => {
-  const docRef = doc(db, collectionName, emailId);
+const addDocument = async (collectionName, username, data) => {
+  const docRef = doc(db, collectionName, username);
   await setDoc(docRef, data);
 };
 
-export const firestoreApi = { addDocument };
+const getDocument = async (collectionName, username) => {
+  const docRef = doc(db, collectionName, username);
+  const data = await getDoc(docRef);
+  return data.data();
+};
+
+const updateData = async (collectionName, username, data) => {
+  const docRef = doc(db, collectionName, username);
+
+  return await updateDoc(docRef, data);
+};
+
+export const firestoreApi = { addDocument, getDocument, updateData };
