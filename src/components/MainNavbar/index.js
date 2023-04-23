@@ -105,6 +105,7 @@ function MainNavbar({ messageBadgeContent = 1 }) {
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
+      sx={{ zIndex: 9999 }}
     >
       <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -228,9 +229,11 @@ function MainNavbar({ messageBadgeContent = 1 }) {
                     aria-label="account of current user"
                     aria-controls={menuId}
                     aria-haspopup="true"
-                    // onClick={() => {
-                    //   router.push(`${app_routes.profile}/${user?.username}`);
-                    // }}
+                    onClick={() => {
+                      router.push(
+                        `${app_routes.profile}/${state?.user?.username}`
+                      );
+                    }}
                     color="inherit"
                   >
                     <AccountCircle />
