@@ -62,8 +62,9 @@ function MainNavbar({ messageBadgeContent = 1 }) {
   }
 
   async function onClickLogout() {
-    authApi.logout();
+    await authApi.logout();
     dispatch(setUser(null));
+    router.push("/login");
   }
 
   const menuId = "primary-search-account-menu";
