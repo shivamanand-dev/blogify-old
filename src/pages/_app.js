@@ -12,7 +12,7 @@ import MainNavbar from "@/components/MainNavbar";
 import { persistor, store } from "@/redux/store";
 import app from "@/utils/firebase";
 import { authApi } from "@/utils/firebase/auth";
-import theme from "@/utils/Theme/theme";
+import theme from "@/utils/theme/theme";
 
 export default function App({ Component, pageProps }) {
   const auth = getAuth(app);

@@ -40,7 +40,12 @@ function Profile() {
       <div className="flex mainContainer">
         <div className="sidebar">Hashtags Used</div>
         <div className="posts-container">
-          <PrimaryButton buttonText="Create Post" />
+          <PrimaryButton
+            buttonText="Create Post"
+            onClick={() => {
+              router.push("/createPost");
+            }}
+          />
         </div>
       </div>
     </StyledProfile>

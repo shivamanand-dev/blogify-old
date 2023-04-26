@@ -3,6 +3,7 @@ import {
   getDoc,
   getFirestore,
   setDoc,
+  Timestamp,
   updateDoc,
 } from "firebase/firestore";
 
@@ -27,4 +28,6 @@ const updateData = async (collectionName, username, data) => {
   return await updateDoc(docRef, data);
 };
 
-export const firestoreApi = { addDocument, getDocument, updateData };
+const now = Timestamp.now();
+
+export const firestoreApi = { addDocument, getDocument, updateData, now };
