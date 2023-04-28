@@ -1,4 +1,6 @@
 import {
+  addDoc,
+  collection,
   doc,
   getDoc,
   getFirestore,
@@ -16,6 +18,12 @@ const addDocument = async (collectionName, username, data) => {
   await setDoc(docRef, data);
 };
 
+const addCollection = async (newCollection, username, data) => {
+  const docRef = doc(db, "Users", username);
+
+  await addDoc(collection(docRef, newCollection), data);
+};
+
 const getDocument = async (collectionName, username) => {
   const docRef = doc(db, collectionName, username);
   const data = await getDoc(docRef);
@@ -30,4 +38,10 @@ const updateData = async (collectionName, username, data) => {
 
 const now = Timestamp.now();
 
-export const firestoreApi = { addDocument, getDocument, updateData, now };
+export const firestoreApi = {
+  addDocument,
+  addCollection,
+  getDocument,
+  updateData,
+  now,
+};
