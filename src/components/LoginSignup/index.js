@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { setUser } from "@/redux/userSlice";
+import { fireStoreCollections } from "@/utils/constants/app_constants";
 import { authApi } from "@/utils/firebase/auth";
 import { firestoreApi } from "@/utils/firebase/firestore";
 
@@ -33,7 +34,7 @@ function LoginSignup({ activeForm = "login" }) {
       const username = data.user.email.split("@")[0];
 
       if (activeForm === "signUp") {
-        await firestoreApi.addDocument("Users", username, {
+        await firestoreApi.addDocument(username, {
           username: username,
           email: data.user.email,
           uid: data.user.uid,
@@ -42,14 +43,14 @@ function LoginSignup({ activeForm = "login" }) {
         });
 
         // await firestoreApi.addDocument("Blogs", username);
-        await firestoreApi.addCollection("Users", "Blogs", username, {
+        await firestoreApi.addCollection(fireStoreCollections.blogs, username, {
           title: "My New Post",
           content: "Lorem ipsum dolor sit amet...",
           lastEdited: firestoreApi.now(),
         });
       }
 
-      const userData = await firestoreApi.getDocument("Users", username);
+      const userData = await firestoreApi.getDocument(username);
 
       dispatch(setUser(userData));
       router.push("/feed");
