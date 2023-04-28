@@ -12,3 +12,5 @@ export const firebase_messagingSenderId =
 export const firebase_appId = process.env.NEXT_PUBLIC_FIREBASE_APP_ID;
 export const firebase_measurementId =
   process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID;
+
+export const tinyMCE = process.env.NEXT_PUBLIC_TinyMCE;

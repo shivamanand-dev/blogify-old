@@ -9,11 +9,10 @@ import { PersistGate } from "redux-persist/integration/react";
 import { ThemeProvider } from "styled-components";
 
 import MainNavbar from "@/components/MainNavbar";
-// import { AuthProvider } from "@/context/AuthContext";
 import { persistor, store } from "@/redux/store";
 import app from "@/utils/firebase";
 import { authApi } from "@/utils/firebase/auth";
-import theme from "@/utils/Theme/theme";
+import theme from "@/utils/theme/theme";
 
 export default function App({ Component, pageProps }) {
   const auth = getAuth(app);
@@ -28,9 +27,7 @@ export default function App({ Component, pageProps }) {
     });
   }, []);
 
-  // console.log(userData);
   return (
-    // <AuthProvider>
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <ThemeProvider theme={theme}>
@@ -44,6 +41,5 @@ export default function App({ Component, pageProps }) {
         </ThemeProvider>
       </PersistGate>
     </Provider>
-    // </AuthProvider>
   );
 }

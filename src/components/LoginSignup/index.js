@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { setUser } from "@/redux/userSlice";
 import { authApi } from "@/utils/firebase/auth";
+import { firestoreApi } from "@/utils/firebase/firestore";
 
 import { PrimaryButton } from "../Buttons";
 import InputField from "../InputBox";
@@ -28,9 +29,32 @@ function LoginSignup({ activeForm = "login" }) {
         ? await authApi.loginUser(loginDetails)
         : await authApi.createUser(loginDetails);
 
-    if (data) {
-      dispatch(setUser(data.user));
+    if (data.user) {
+      const username = data.user.email.split("@")[0];
+
+      if (activeForm === "signUp") {
+        await firestoreApi.addDocument("Users", username, {
+          username: username,
+          email: data.user.email,
+          uid: data.user.uid,
+          profileImageUrl:
+            "https://firebasestorage.googleapis.com/v0/b/blogify-9a1bd.appspot.com/o/anonymous.png?alt=media&token=4b23045c-6f36-4054-a026-02922bff24c6",
+        });
+
+        // await firestoreApi.addDocument("Blogs", username);
+        await firestoreApi.addCollection("Users", "Blogs", username, {
+          title: "My New Post",
+          content: "Lorem ipsum dolor sit amet...",
+          lastEdited: firestoreApi.now(),
+        });
+      }
+
+      const userData = await firestoreApi.getDocument("Users", username);
+
+      dispatch(setUser(userData));
       router.push("/feed");
+    } else {
+      alert(data);
     }
   };
   return (
