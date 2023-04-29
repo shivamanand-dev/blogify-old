@@ -46,7 +46,7 @@ export const makeStore = () =>
             REHYDRATE,
           ],
           ignoredActionPaths: ["payload", "user", "blogs"],
-          ignoredPaths: ["user.user"],
+          ignoredPaths: ["user.user", "blogs.blogs"],
         },
       }),
   });
