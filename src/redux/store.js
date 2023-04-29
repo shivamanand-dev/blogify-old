@@ -13,10 +13,12 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
+import blogsReducer from "./blogsSlice";
 import userReducer from "./userSlice";
 
 const reducers = {
   user: userReducer,
+  blogs: blogsReducer,
 };
 
 const persistConfig = {

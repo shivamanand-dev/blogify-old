@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
+import { setBlogs } from "@/redux/blogsSlice";
 import { setUser } from "@/redux/userSlice";
 import { fireStoreCollections } from "@/utils/constants/app_constants";
 import { authApi } from "@/utils/firebase/auth";
@@ -51,8 +52,10 @@ function LoginSignup({ activeForm = "login" }) {
       }
 
       const userData = await firestoreApi.getDocument(username);
+      const blogsData = await firestoreApi.getCollection(username);
 
       dispatch(setUser(userData));
+      dispatch(setBlogs(blogsData));
       router.push("/feed");
     } else {
       alert(data);
