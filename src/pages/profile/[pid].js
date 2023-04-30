@@ -60,7 +60,7 @@ function Profile() {
           />
 
           <div className="posts">
-            {blogsData.map((e) => {
+            {blogsData?.map((e) => {
               return (
                 <div key={e.title}>
                   <h1>{e.title}</h1>

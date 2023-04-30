@@ -28,13 +28,10 @@ function UserAccountInfo({ src, name, email, follower, following }) {
 
   const onClickSaveName = async () => {
     if (name !== displayName) {
-      await firestoreApi.updateData("user", router.query.pid, {
+      await firestoreApi.updateData(router.query.pid, {
         displayName: displayName,
       });
-      const updatedData = await firestoreApi.getDocument(
-        "user",
-        router.query.pid
-      );
+      const updatedData = await firestoreApi.getDocument(router.query.pid);
       dispatch(setUser(updatedData));
     }
     switchProfileModal();
