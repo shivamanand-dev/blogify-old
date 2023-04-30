@@ -1,17 +1,16 @@
 import { Editor } from "@tinymce/tinymce-react";
-import { arrayUnion, orderBy } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 
-import { userState } from "@/redux/userSlice";
+// import { useSelector } from "react-redux";
+// import { blogsState } from "@/redux/blogsSlice";
 import { tinyMCE } from "@/utils/constants/app_config";
 import { firestoreApi } from "@/utils/firebase/firestore";
 
 import { PrimaryButton } from "../Buttons";
 
 function TextEditor() {
-  const state = useSelector(userState);
+  // const blogsDataState = useSelector(blogsState);
   const router = useRouter();
   const [editorContent, setEditorContent] = useState();
 
@@ -40,30 +39,12 @@ function TextEditor() {
 
   const handleSaveBlog = async () => {
     if (editorContent) {
-      const blogData = await firestoreApi.getDocument(
-        "Blog",
-        state?.user?.username,
-        // desc for desending
-        orderBy("createdAt", "asc")
-      );
-
-      if (blogData) {
-        await firestoreApi.updateData("Blog", state?.user?.username, {
-          posts: arrayUnion({
-            type: "public",
-            content: editorContent,
-            createdAt: firestoreApi.now,
-          }),
-        });
-      } else {
-        await firestoreApi.addDocument("Blog", state?.user?.username, {
-          posts: arrayUnion({
-            type: "public",
-            content: editorContent,
-            createdAt: firestoreApi.now,
-          }),
-        });
-      }
+      await firestoreApi.addCollection("Blogs", "lorake444", {
+        title: "fds",
+        content: editorContent,
+        lastEdited: firestoreApi.now,
+        id: "sdfs",
+      });
 
       router.push("/feed");
     }

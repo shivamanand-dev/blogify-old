@@ -48,7 +48,7 @@ const getCollection = async (username) => {
       querySnapshot.forEach((doc) => {
         data.push(doc.data());
       });
-
+      console.log(data);
       return data;
     })
     .catch((error) => {
