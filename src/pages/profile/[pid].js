@@ -6,27 +6,39 @@ import { useSelector } from "react-redux";
 import { PrimaryButton } from "@/components/Buttons";
 import { StyledProfile } from "@/components/StyledPages";
 import UserAccountInfo from "@/components/UserAccountInfo";
+import { blogsState } from "@/redux/blogsSlice";
 import { userState } from "@/redux/userSlice";
 import { firestoreApi } from "@/utils/firebase/firestore";
 
 function Profile() {
-  const state = useSelector(userState);
-  const [userData, setUserData] = useState();
-  const [currentPid, setCurrentPid] = useState();
-
   const router = useRouter();
 
+  const userDataState = useSelector(userState);
+  const blogsDataState = useSelector(blogsState);
+  const [userData, setUserData] = useState();
+  const [blogsData, setBlogsData] = useState();
+  const [currentPid, setCurrentPid] = useState(userDataState?.user?.email);
+
   const getData = async (pid) => {
-    const data = await firestoreApi.getDocument("user", pid);
-    setUserData(data);
+    const userData = await firestoreApi.getDocument(pid);
+    setUserData(userData);
+    const blogsData = await firestoreApi.getCollection(pid);
+    setBlogsData(blogsData);
   };
 
   useEffect(() => {
-    if (router.query.pid && router.query.pid !== currentPid) {
+    if (
+      router.query.pid &&
+      router.query.pid !== currentPid &&
+      router.query.pid !== userDataState?.user?.email
+    ) {
       setCurrentPid(router.query.pid);
       getData(router.query.pid);
+    } else {
+      setUserData(userDataState?.user);
+      setBlogsData(blogsDataState?.blogs);
     }
-  }, [router.query.pid, state?.user]);
+  }, [router.query.pid, userDataState?.user]);
 
   return (
     <StyledProfile>
@@ -46,6 +58,17 @@ function Profile() {
               router.push("/createPost");
             }}
           />
+
+          <div className="posts">
+            {blogsData?.map((e) => {
+              return (
+                <div key={e.id}>
+                  <h1>{e.data.title}</h1>
+                  <p>{e.data.content}</p>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </StyledProfile>

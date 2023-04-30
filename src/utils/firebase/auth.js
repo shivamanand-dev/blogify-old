@@ -29,7 +29,7 @@ const loginUser = async (data) => {
 };
 
 const logout = async () => {
-  localStorage.removeItem("persist:root");
+  localStorage.clear();
   await auth.signOut();
 };
 
