@@ -13,11 +13,11 @@ import { firestoreApi } from "@/utils/firebase/firestore";
 function Profile() {
   const router = useRouter();
 
-  const usersState = useSelector(userState);
+  const userDataState = useSelector(userState);
   const blogsDataState = useSelector(blogsState);
   const [userData, setUserData] = useState();
   const [blogsData, setBlogsData] = useState();
-  const [currentPid, setCurrentPid] = useState();
+  const [currentPid, setCurrentPid] = useState(userDataState?.user?.email);
 
   const getData = async (pid) => {
     const userData = await firestoreApi.getDocument(pid);
@@ -30,15 +30,15 @@ function Profile() {
     if (
       router.query.pid &&
       router.query.pid !== currentPid &&
-      router.query.pid !== usersState?.user?.username
+      router.query.pid !== userDataState?.user?.email
     ) {
       setCurrentPid(router.query.pid);
       getData(router.query.pid);
     } else {
-      setUserData(usersState?.user);
+      setUserData(userDataState?.user);
       setBlogsData(blogsDataState?.blogs);
     }
-  }, [router.query.pid, usersState?.user]);
+  }, [router.query.pid, userDataState?.user]);
 
   return (
     <StyledProfile>

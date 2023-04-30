@@ -32,27 +32,28 @@ function LoginSignup({ activeForm = "login" }) {
         : await authApi.createUser(loginDetails);
 
     if (data.user) {
-      const username = data.user.email.split("@")[0];
-
       if (activeForm === "signUp") {
-        await firestoreApi.addDocument(username, {
-          username: username,
+        await firestoreApi.addDocument(data.user.email, {
           email: data.user.email,
           uid: data.user.uid,
           profileImageUrl:
             "https://firebasestorage.googleapis.com/v0/b/blogify-9a1bd.appspot.com/o/anonymous.png?alt=media&token=4b23045c-6f36-4054-a026-02922bff24c6",
         });
 
-        // await firestoreApi.addDocument("Blogs", username);
-        await firestoreApi.addCollection(fireStoreCollections.blogs, username, {
-          title: "My New Post",
-          content: "Lorem ipsum dolor sit amet...",
-          lastEdited: firestoreApi.now(),
-        });
+        // await firestoreApi.addDocument("Blogs", data.user.email);
+        await firestoreApi.addCollection(
+          fireStoreCollections.blogs,
+          data.user.email,
+          {
+            title: "My New Post",
+            content: "Lorem ipsum dolor sit amet...",
+            lastEdited: firestoreApi.now,
+          }
+        );
       }
 
-      const userData = await firestoreApi.getDocument(username);
-      const blogsData = await firestoreApi.getCollection(username);
+      const userData = await firestoreApi.getDocument(data.user.email);
+      const blogsData = await firestoreApi.getCollection(data.user.email);
 
       dispatch(setUser(userData));
       dispatch(setBlogs(blogsData));

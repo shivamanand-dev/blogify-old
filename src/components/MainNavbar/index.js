@@ -213,7 +213,7 @@ function MainNavbar({ messageBadgeContent = 1 }) {
               )}
               {state?.user && (
                 <>
-                  <InputField placeholder="Search Username" />
+                  <InputField placeholder="Search Email" />
                   <IconButton
                     size="large"
                     aria-label="show 17 new notifications"
@@ -231,7 +231,7 @@ function MainNavbar({ messageBadgeContent = 1 }) {
                     aria-haspopup="true"
                     onClick={() => {
                       router.push(
-                        `${app_routes.profile}/${state?.user?.username}`
+                        `${app_routes.profile}/${state?.user?.email}`
                       );
                     }}
                     color="inherit"
