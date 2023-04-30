@@ -6,27 +6,39 @@ import { useSelector } from "react-redux";
 import { PrimaryButton } from "@/components/Buttons";
 import { StyledProfile } from "@/components/StyledPages";
 import UserAccountInfo from "@/components/UserAccountInfo";
+import { blogsState } from "@/redux/blogsSlice";
 import { userState } from "@/redux/userSlice";
 import { firestoreApi } from "@/utils/firebase/firestore";
 
 function Profile() {
-  const state = useSelector(userState);
+  const usersState = useSelector(userState);
+  const blogsDataState = useSelector(blogsState);
   const [userData, setUserData] = useState();
+  const [blogsData, setBlogsData] = useState();
   const [currentPid, setCurrentPid] = useState();
 
   const router = useRouter();
 
   const getData = async (pid) => {
-    const data = await firestoreApi.getDocument("user", pid);
-    setUserData(data);
+    const userData = await firestoreApi.getDocument(pid);
+    setUserData(userData);
+    const blogsData = await firestoreApi.getCollection(pid);
+    setBlogsData(blogsData);
   };
 
   useEffect(() => {
-    if (router.query.pid && router.query.pid !== currentPid) {
+    if (
+      router.query.pid &&
+      router.query.pid !== currentPid &&
+      currentPid !== usersState?.user?.username
+    ) {
       setCurrentPid(router.query.pid);
       getData(router.query.pid);
+    } else {
+      setUserData(usersState?.user);
+      setBlogsData(blogsDataState?.blogs);
     }
-  }, [router.query.pid, state?.user]);
+  }, [router.query.pid, usersState?.user]);
 
   return (
     <StyledProfile>
@@ -46,6 +58,17 @@ function Profile() {
               router.push("/createPost");
             }}
           />
+
+          <div className="posts">
+            {blogsData.map((e) => {
+              return (
+                <div key={e.title}>
+                  <h1>{e.title}</h1>
+                  <p>{e.content}</p>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </StyledProfile>
