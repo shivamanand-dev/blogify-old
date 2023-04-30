@@ -66,6 +66,22 @@ const updateData = async (username, data) => {
   return await updateDoc(docRef, data);
 };
 
+const updateCollectionData = async (mySubcollection, username, data) => {
+  const docRef = doc(db, fireStoreCollections.users, username);
+
+  const myCollection = collection(docRef, mySubcollection);
+
+  const subDocRef = doc(myCollection, "subDocumentId");
+
+  return await updateDoc(subDocRef, data)
+    .then(() => {
+      alert("Subcollection document updated successfully.");
+    })
+    .catch((error) => {
+      console.error("Error updating subcollection document: ", error);
+    });
+};
+
 const now = Timestamp.now();
 
 export const firestoreApi = {
@@ -74,5 +90,6 @@ export const firestoreApi = {
   getDocument,
   getCollection,
   updateData,
+  updateCollectionData,
   now,
 };
