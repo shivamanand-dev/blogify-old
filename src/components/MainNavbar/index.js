@@ -159,7 +159,7 @@ function MainNavbar({ messageBadgeContent = 1 }) {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar
           position="static"
-          sx={{ background: "#3c3c3c", color: "#eeeeee" }}
+          sx={{ background: "#1B263B", color: "#e0e1dd" }}
         >
           <Toolbar>
             {/* <IconButton
