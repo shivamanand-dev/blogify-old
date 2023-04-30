@@ -11,13 +11,13 @@ import { userState } from "@/redux/userSlice";
 import { firestoreApi } from "@/utils/firebase/firestore";
 
 function Profile() {
+  const router = useRouter();
+
   const usersState = useSelector(userState);
   const blogsDataState = useSelector(blogsState);
   const [userData, setUserData] = useState();
   const [blogsData, setBlogsData] = useState();
   const [currentPid, setCurrentPid] = useState();
-
-  const router = useRouter();
 
   const getData = async (pid) => {
     const userData = await firestoreApi.getDocument(pid);
@@ -30,7 +30,7 @@ function Profile() {
     if (
       router.query.pid &&
       router.query.pid !== currentPid &&
-      currentPid !== usersState?.user?.username
+      router.query.pid !== usersState?.user?.username
     ) {
       setCurrentPid(router.query.pid);
       getData(router.query.pid);
@@ -60,11 +60,11 @@ function Profile() {
           />
 
           <div className="posts">
-            {blogsData?.map((e, i) => {
+            {blogsData?.map((e) => {
               return (
-                <div key={i}>
-                  <h1>{e.title}</h1>
-                  <p>{e.content}</p>
+                <div key={e.id}>
+                  <h1>{e.data.title}</h1>
+                  <p>{e.data.content}</p>
                 </div>
               );
             })}

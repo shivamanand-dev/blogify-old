@@ -46,7 +46,11 @@ const getCollection = async (username) => {
     .then((querySnapshot) => {
       const data = [];
       querySnapshot.forEach((doc) => {
-        data.push(doc.data());
+        const parsedData = {
+          id: doc.id,
+          data: doc.data(),
+        };
+        data.push(parsedData);
       });
 
       return data;
