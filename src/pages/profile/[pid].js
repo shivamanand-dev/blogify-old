@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -8,10 +9,12 @@ import { StyledProfile } from "@/components/StyledPages";
 import UserAccountInfo from "@/components/UserAccountInfo";
 import { blogsState } from "@/redux/blogsSlice";
 import { userState } from "@/redux/userSlice";
+import app from "@/utils/firebase";
 import { firestoreApi } from "@/utils/firebase/firestore";
 
 function Profile() {
   const router = useRouter();
+  const auth = getAuth(app);
 
   const userDataState = useSelector(userState);
   const blogsDataState = useSelector(blogsState);
@@ -32,8 +35,12 @@ function Profile() {
       router.query.pid !== currentPid &&
       router.query.pid !== userDataState?.user?.email
     ) {
-      setCurrentPid(router.query.pid);
-      getData(router.query.pid);
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          setCurrentPid(router.query.pid);
+          getData(router.query.pid);
+        }
+      });
     } else {
       setUserData(userDataState?.user);
       setBlogsData(blogsDataState?.blogs);
