@@ -4,7 +4,6 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import FollowTheSignsIcon from "@mui/icons-material/FollowTheSigns";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
-import MailIcon from "@mui/icons-material/Mail";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
@@ -28,29 +27,18 @@ import { authApi } from "@/utils/firebase/auth";
 import InputField from "../InputBox";
 import { StyledNavbar } from "./StyledNavbar";
 
-function MainNavbar({ messageBadgeContent = 1 }) {
+function MainNavbar({ notificationBadgeContent = 1 }) {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const state = useSelector(userState);
 
-  const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  // const handleProfileMenuOpen = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -68,26 +56,6 @@ function MainNavbar({ messageBadgeContent = 1 }) {
   }
 
   const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -107,50 +75,69 @@ function MainNavbar({ messageBadgeContent = 1 }) {
       onClose={handleMobileMenuClose}
       sx={{ zIndex: 9999 }}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={messageBadgeContent} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      {/* <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem> */}
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <AccountCircle />
-          </Badge>
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      {state?.user && (
+        <>
+          <MenuItem onClick={handleMobileMenuClose}>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <Badge badgeContent={notificationBadgeContent} color="error">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <p>Notifications</p>
+          </MenuItem>
+          <MenuItem>
+            <IconButton size="large" color="inherit">
+              <Badge badgeContent={17} color="error">
+                <AccountCircle />
+              </Badge>
+            </IconButton>
+            <p>Profile</p>
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleMobileMenuClose();
+              onClickLogout();
+            }}
+          >
+            <IconButton size="large" color="inherit">
+              <LogoutIcon />
+            </IconButton>
+            <p>Log Out</p>
+          </MenuItem>
+        </>
+      )}
+
+      {!state?.user && (
+        <>
+          <MenuItem
+            onClick={() => {
+              handleMobileMenuClose();
+              sendToRoute(app_routes.login);
+            }}
+          >
+            <IconButton size="large" color="inherit">
+              <LoginIcon />
+            </IconButton>
+            <p>Login</p>
+          </MenuItem>
+
+          <MenuItem
+            onClick={() => {
+              handleMobileMenuClose();
+              sendToRoute(app_routes.signup);
+            }}
+          >
+            <IconButton size="large" color="inherit">
+              <FollowTheSignsIcon />
+            </IconButton>
+            <p>Sign Up</p>
+          </MenuItem>
+        </>
+      )}
     </Menu>
   );
 
@@ -162,15 +149,6 @@ function MainNavbar({ messageBadgeContent = 1 }) {
           sx={{ background: "#1B263B", color: "#e0e1dd" }}
         >
           <Toolbar>
-            {/* <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton> */}
             <Typography
               variant="h6"
               noWrap
@@ -270,7 +248,7 @@ function MainNavbar({ messageBadgeContent = 1 }) {
           </Toolbar>
         </AppBar>
         {renderMobileMenu}
-        {renderMenu}
+        {/* {renderMenu} */}
       </Box>
     </StyledNavbar>
   );
