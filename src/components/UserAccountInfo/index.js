@@ -20,6 +20,7 @@ function UserAccountInfo({
   editProfile,
   switchProfileModal,
   displayName,
+  showEditBtn = false,
 }) {
   // eslint-disable-next-line no-unused-vars
 
@@ -31,12 +32,14 @@ function UserAccountInfo({
           {!editProfile && (
             <Typography variant="h4" ml={3}>
               {name}
-              <PrimaryButton
-                buttonText=""
-                onClick={switchProfileModal}
-                startIcon={<EditIcon />}
-                variant="text"
-              />
+              {showEditBtn && (
+                <PrimaryButton
+                  buttonText=""
+                  onClick={switchProfileModal}
+                  startIcon={<EditIcon />}
+                  variant="text"
+                />
+              )}
             </Typography>
           )}
           {editProfile && (

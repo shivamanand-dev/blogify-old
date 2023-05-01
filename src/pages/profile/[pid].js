@@ -37,7 +37,10 @@ function Profile() {
   };
 
   const onClickSaveName = async () => {
-    if (userData?.displayName !== displayName) {
+    if (
+      userData?.displayName !== displayName &&
+      userDataState?.user?.email === userData?.email
+    ) {
       await firestoreApi.updateData(router.query.pid, {
         displayName: displayName,
       });
@@ -78,6 +81,7 @@ function Profile() {
         editProfile={editProfile}
         switchProfileModal={switchProfileModal}
         displayName={displayName}
+        showEditBtn={router.query.pid === userDataState?.user?.email}
       />
       <div className="flex mainContainer">
         <div className="sidebar">Hashtags Used</div>
