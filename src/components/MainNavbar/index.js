@@ -89,11 +89,14 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
             </IconButton>
             <p>Notifications</p>
           </MenuItem>
-          <MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleMobileMenuClose();
+              router.push(`${app_routes.profile}/${state?.user?.email}`);
+            }}
+          >
             <IconButton size="large" color="inherit">
-              <Badge badgeContent={17} color="error">
-                <AccountCircle />
-              </Badge>
+              <AccountCircle />
             </IconButton>
             <p>Profile</p>
           </MenuItem>
