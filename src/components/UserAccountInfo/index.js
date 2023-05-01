@@ -1,41 +1,27 @@
 import DoneIcon from "@mui/icons-material/Done";
 import EditIcon from "@mui/icons-material/Edit";
 import { Typography } from "@mui/material";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
 
 import Picture from "@/components/Picture";
-import { setUser } from "@/redux/userSlice";
-import { firestoreApi } from "@/utils/firebase/firestore";
 
 // import { authApi } from "@/utils/firebase/auth";
 import { PrimaryButton } from "../Buttons";
 import { StyledUserAccountInfo } from "./StyledUserAccountInfo";
 // import { signOut } from "firebase/auth";
 
-function UserAccountInfo({ src, name, email, follower, following }) {
-  const dispatch = useDispatch();
-  const router = useRouter();
-
-  const [editProfile, setEditProfile] = useState(false);
-  const [displayName, setDisplayName] = useState(name);
-
+function UserAccountInfo({
+  src,
+  name,
+  email,
+  follower,
+  following,
+  onClickSaveName,
+  setDisplayName,
+  editProfile,
+  switchProfileModal,
+  displayName,
+}) {
   // eslint-disable-next-line no-unused-vars
-  const switchProfileModal = () => {
-    setEditProfile(!editProfile);
-  };
-
-  const onClickSaveName = async () => {
-    if (name !== displayName) {
-      await firestoreApi.updateData(router.query.pid, {
-        displayName: displayName,
-      });
-      const updatedData = await firestoreApi.getDocument(router.query.pid);
-      dispatch(setUser(updatedData));
-    }
-    switchProfileModal();
-  };
 
   return (
     <StyledUserAccountInfo>
