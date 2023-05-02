@@ -1,26 +1,15 @@
 import { Editor } from "@tinymce/tinymce-react";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
-import { setBlogs } from "@/redux/blogsSlice";
-import { userState } from "@/redux/userSlice";
 import { tinyMCE } from "@/utils/constants/app_config";
-import { fireStoreCollections } from "@/utils/constants/app_constants";
-import { firestoreApi } from "@/utils/firebase/firestore";
 
 import { PrimaryButton } from "../Buttons";
 
-function TextEditor() {
-  const usersDataState = useSelector(userState);
-  const router = useRouter();
-  const [editorContent, setEditorContent] = useState();
-
-  const dispatch = useDispatch();
-
+function TextEditor({ handleSaveBlog, setEditorContent, editorContent }) {
   const editorConfig = {
     plugins: "codesample",
     toolbar: "codesample",
+    skin: "oxide-dark",
+    content_css: "dark",
     codesample_languages: [
       { text: "HTML/XML", value: "markup" },
       { text: "JavaScript", value: "javascript" },
@@ -39,28 +28,6 @@ function TextEditor() {
 
   const handleEditorChange = (content) => {
     setEditorContent(content);
-  };
-
-  const handleSaveBlog = async () => {
-    if (editorContent) {
-      await firestoreApi.addCollection(
-        fireStoreCollections.blogs,
-        usersDataState?.user?.email,
-        {
-          title: "fds",
-          content: editorContent,
-          lastEdited: firestoreApi.now,
-        }
-      );
-
-      const blogsData = await firestoreApi.getCollection(
-        usersDataState?.user?.email
-      );
-
-      dispatch(setBlogs(blogsData));
-
-      router.push("/feed");
-    }
   };
 
   return (
