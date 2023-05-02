@@ -24,7 +24,7 @@ import { setUser, userState } from "@/redux/userSlice";
 import { app_routes } from "@/utils/constants/app_constants";
 import { authApi } from "@/utils/firebase/auth";
 
-import InputField from "../InputBox";
+import InputField from "../InputField";
 import { StyledNavbar } from "./StyledNavbar";
 
 function MainNavbar({ notificationBadgeContent = 1 }) {
