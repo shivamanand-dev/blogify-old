@@ -4,10 +4,8 @@ import { Typography } from "@mui/material";
 
 import Picture from "@/components/Picture";
 
-// import { authApi } from "@/utils/firebase/auth";
 import { PrimaryButton } from "../Buttons";
 import { StyledUserAccountInfo } from "./StyledUserAccountInfo";
-// import { signOut } from "firebase/auth";
 
 function UserAccountInfo({
   src,
@@ -22,8 +20,6 @@ function UserAccountInfo({
   displayName,
   showEditBtn = false,
 }) {
-  // eslint-disable-next-line no-unused-vars
-
   return (
     <StyledUserAccountInfo>
       <div className="flex">

@@ -1,10 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { Typography } from "@mui/material";
 import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import BlogsPostCard from "@/components/BlogsPostCard";
 import { PrimaryButton } from "@/components/Buttons";
+import StckChip from "@/components/StackChip";
 import { StyledProfile } from "@/components/StyledPages";
 import UserAccountInfo from "@/components/UserAccountInfo";
 import { blogsState } from "@/redux/blogsSlice";
@@ -19,11 +22,13 @@ function Profile() {
 
   const userDataState = useSelector(userState);
   const blogsDataState = useSelector(blogsState);
+
   const [userData, setUserData] = useState();
   const [blogsData, setBlogsData] = useState();
   const [currentPid, setCurrentPid] = useState(userDataState?.user?.email);
-  const [displayName, setDisplayName] = useState(name);
+  const [displayName, setDisplayName] = useState();
   const [editProfile, setEditProfile] = useState(false);
+  const [selectedHashTags, setSelectedHashTags] = useState([]);
 
   const getData = async (pid) => {
     const userData = await firestoreApi.getDocument(pid);
@@ -38,6 +43,7 @@ function Profile() {
 
   const onClickSaveName = async () => {
     if (
+      displayName &&
       userData?.displayName !== displayName &&
       userDataState?.user?.email === userData?.email
     ) {
@@ -48,6 +54,17 @@ function Profile() {
       dispatch(setUser(updatedData));
     }
     switchProfileModal();
+  };
+
+  const onClickTagsChip = (e) => {
+    if (selectedHashTags.includes(e.target.innerText)) {
+      const updatedSelectedHashTags = selectedHashTags.filter(
+        (h) => h !== e.target.innerText
+      );
+      setSelectedHashTags(updatedSelectedHashTags);
+    } else {
+      setSelectedHashTags([...selectedHashTags, e.target.innerText]);
+    }
   };
 
   useEffect(() => {
@@ -84,22 +101,34 @@ function Profile() {
         showEditBtn={router.query.pid === userDataState?.user?.email}
       />
       <div className="flex mainContainer">
-        <div className="sidebar">Hashtags Used</div>
+        <div className="sidebar">
+          <Typography gutterBottom variant="h5" component="div">
+            Filter Tags
+          </Typography>
+
+          <StckChip
+            selectedHashTags={selectedHashTags}
+            onClickTagsChip={onClickTagsChip}
+            clickable={true}
+          />
+        </div>
         <div className="posts-container">
           <PrimaryButton
             buttonText="Create Post"
             onClick={() => {
               router.push("/createPost");
             }}
+            customStyle={{ marginBottom: "1rem" }}
           />
 
           <div className="posts">
             {blogsData?.map((e) => {
               return (
-                <div key={e.id}>
-                  <h1>{e.data.title}</h1>
-                  <p>{e.data.content}</p>
-                </div>
+                <BlogsPostCard
+                  key={e.id}
+                  title={e.data.title}
+                  content={e.data.content}
+                />
               );
             })}
           </div>
