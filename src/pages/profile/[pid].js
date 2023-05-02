@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import BlogsPostCard from "@/components/BlogsPostCard";
 import { PrimaryButton } from "@/components/Buttons";
 import { StyledProfile } from "@/components/StyledPages";
 import UserAccountInfo from "@/components/UserAccountInfo";
@@ -96,10 +97,11 @@ function Profile() {
           <div className="posts">
             {blogsData?.map((e) => {
               return (
-                <div key={e.id}>
-                  <h1>{e.data.title}</h1>
-                  <p>{e.data.content}</p>
-                </div>
+                <BlogsPostCard
+                  key={e.id}
+                  title={e.data.title}
+                  content={e.data.content}
+                />
               );
             })}
           </div>
