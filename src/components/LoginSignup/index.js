@@ -9,7 +9,7 @@ import { authApi } from "@/utils/firebase/auth";
 import { firestoreApi } from "@/utils/firebase/firestore";
 
 import { PrimaryButton } from "../Buttons";
-import InputField from "../InputBox";
+import InputField from "../InputField";
 import StyledLoginSignup from "./StyledLoginSignup";
 
 function LoginSignup({ activeForm = "login" }) {
