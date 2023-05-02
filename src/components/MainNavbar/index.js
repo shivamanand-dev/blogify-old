@@ -76,70 +76,72 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
       sx={{ zIndex: 9999 }}
     >
       {state?.user && (
-        <>
-          <MenuItem onClick={handleMobileMenuClose}>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={notificationBadgeContent} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <p>Notifications</p>
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              handleMobileMenuClose();
-              router.push(`${app_routes.profile}/${state?.user?.email}`);
-            }}
+        <MenuItem onClick={handleMobileMenuClose}>
+          <IconButton
+            size="large"
+            aria-label="show 17 new notifications"
+            color="inherit"
           >
-            <IconButton size="large" color="inherit">
-              <AccountCircle />
-            </IconButton>
-            <p>Profile</p>
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              handleMobileMenuClose();
-              onClickLogout();
-            }}
-          >
-            <IconButton size="large" color="inherit">
-              <LogoutIcon />
-            </IconButton>
-            <p>Log Out</p>
-          </MenuItem>
-        </>
+            <Badge badgeContent={notificationBadgeContent} color="error">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <p>Notifications</p>
+        </MenuItem>
+      )}
+      {state?.user && (
+        <MenuItem
+          onClick={() => {
+            handleMobileMenuClose();
+            router.push(`${app_routes.profile}/${state?.user?.email}`);
+          }}
+        >
+          <IconButton size="large" color="inherit">
+            <AccountCircle />
+          </IconButton>
+          <p>Profile</p>
+        </MenuItem>
+      )}
+      {state?.user && (
+        <MenuItem
+          onClick={() => {
+            handleMobileMenuClose();
+            onClickLogout();
+          }}
+        >
+          <IconButton size="large" color="inherit">
+            <LogoutIcon />
+          </IconButton>
+          <p>Log Out</p>
+        </MenuItem>
       )}
 
       {!state?.user && (
-        <>
-          <MenuItem
-            onClick={() => {
-              handleMobileMenuClose();
-              sendToRoute(app_routes.login);
-            }}
-          >
-            <IconButton size="large" color="inherit">
-              <LoginIcon />
-            </IconButton>
-            <p>Login</p>
-          </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleMobileMenuClose();
+            sendToRoute(app_routes.login);
+          }}
+        >
+          <IconButton size="large" color="inherit">
+            <LoginIcon />
+          </IconButton>
+          <p>Login</p>
+        </MenuItem>
+      )}
 
-          <MenuItem
-            onClick={() => {
-              handleMobileMenuClose();
-              sendToRoute(app_routes.signup);
-            }}
-          >
-            <IconButton size="large" color="inherit">
-              <FollowTheSignsIcon />
-            </IconButton>
-            <p>Sign Up</p>
-          </MenuItem>
-        </>
+      {!state?.user && (
+        <MenuItem
+          onClick={() => {
+            handleMobileMenuClose();
+            sendToRoute(app_routes.signup);
+          }}
+        >
+          <IconButton size="large" color="inherit">
+            <FollowTheSignsIcon />
+          </IconButton>
+          <p>Sign Up</p>
+        </MenuItem>
       )}
     </Menu>
   );
