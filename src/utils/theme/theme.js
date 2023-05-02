@@ -1,6 +1,9 @@
 export const COLORS = {
-  DARK_COLOR: "#3c3c3c",
-  LIGHTS_COLOR: "#eeeeee",
+  DARK_COLOR: "#0d1b2a",
+  DARK_COLOR_A: "#1B263B",
+  BLUE_COLOR_A: "#415A77",
+  BLUE_COLOR_B: "#778DA9",
+  LIGHTS_COLOR: "#E0E1DD",
 };
 
 export const FONT_SIZES = {
