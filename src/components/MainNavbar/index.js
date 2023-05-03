@@ -1,6 +1,7 @@
 // import { MenuIcon, SearchIcon } from "@mui/icons-material";
 // import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import BungalowIcon from "@mui/icons-material/Bungalow";
 import FollowTheSignsIcon from "@mui/icons-material/FollowTheSigns";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -200,6 +201,15 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
               {state?.user && (
                 <>
                   <InputField placeholder="Search Email" />
+
+                  <IconButton size="large" color="inherit">
+                    <BungalowIcon
+                      onClick={() => {
+                        router.push(app_routes.feed);
+                      }}
+                    />
+                  </IconButton>
+
                   <IconButton
                     size="large"
                     aria-label="show 17 new notifications"
