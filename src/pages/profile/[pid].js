@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import BlogsPostCard from "@/components/BlogsPostCard";
-import { PrimaryButton } from "@/components/Buttons";
 import StckChip from "@/components/StackChip";
 import { StyledProfile } from "@/components/StyledPages";
 import UserAccountInfo from "@/components/UserAccountInfo";
@@ -113,13 +112,11 @@ function Profile() {
           />
         </div>
         <div className="posts-container">
-          <PrimaryButton
+          {/* <PrimaryButton
             buttonText="Create Post"
-            onClick={() => {
-              router.push("/createPost");
-            }}
+            
             customStyle={{ marginBottom: "1rem" }}
-          />
+          /> */}
 
           <div className="posts">
             {blogsData?.map((e) => {

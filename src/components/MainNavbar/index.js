@@ -158,7 +158,10 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
               variant="h6"
               noWrap
               component="div"
-              sx={{ display: { sm: "block" } }}
+              sx={{ display: { sm: "block", cursor: "pointer" } }}
+              onClick={() => {
+                sendToRoute("/");
+              }}
             >
               Blogify
             </Typography>
