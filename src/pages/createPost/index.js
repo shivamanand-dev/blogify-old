@@ -1,5 +1,6 @@
 /* eslint-disable security/detect-object-injection */
 import StarRateIcon from "@mui/icons-material/StarRate";
+import { where } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,13 +11,13 @@ import { StyledCreatePost } from "@/components/StyledPages/StyledCreatePost";
 import TextEditor from "@/components/TextEditor";
 import { setBlogs } from "@/redux/blogsSlice";
 import { userState } from "@/redux/userSlice";
-import { fireStoreCollections } from "@/utils/constants/app_constants";
 import { firestoreApi } from "@/utils/firebase/firestore";
+import { blogServices } from "@/utils/firebase/services/blogServices";
 
 function CreatePost() {
-  const usersDataState = useSelector(userState);
   const router = useRouter();
   const dispatch = useDispatch();
+  const userStateData = useSelector(userState);
 
   const [editorContent, setEditorContent] = useState();
   const [blogHeading, setBlogHeading] = useState();
@@ -50,20 +51,17 @@ function CreatePost() {
 
   const handleSaveBlog = async () => {
     if (editorContent && blogHeading) {
-      await firestoreApi.addCollection(
-        fireStoreCollections.users,
-        fireStoreCollections.blogs,
-        usersDataState?.user?.email,
-        {
-          title: blogHeading,
-          content: editorContent,
-          lastEdited: firestoreApi.now,
-        }
-      );
+      await blogServices.createBlog({
+        title: blogHeading,
+        content: editorContent,
+        lastEdited: firestoreApi.now,
+        email: userStateData?.user?.email,
+        displayName: userStateData?.user?.displayName,
+        uid: userStateData?.user?.uid,
+      });
 
-      const blogsData = await firestoreApi.getCollection(
-        fireStoreCollections.users,
-        usersDataState?.user?.email
+      const blogsData = await blogServices.getBlog(
+        where("uid", "==", userStateData?.user?.uid)
       );
 
       dispatch(setBlogs(blogsData));

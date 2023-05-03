@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Typography } from "@mui/material";
 import { getAuth } from "firebase/auth";
+import { where } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +15,7 @@ import { setUser, userState } from "@/redux/userSlice";
 import { fireStoreCollections } from "@/utils/constants/app_constants";
 import app from "@/utils/firebase";
 import { firestoreApi } from "@/utils/firebase/firestore";
+import { blogServices } from "@/utils/firebase/services/blogServices";
 import { userServices } from "@/utils/firebase/services/userServices";
 
 function Profile() {
@@ -32,15 +34,12 @@ function Profile() {
   const [selectedHashTags, setSelectedHashTags] = useState([]);
 
   const getData = async (pid) => {
-    const userData = await userServices.getUser(
-      fireStoreCollections.users,
-      pid
-    );
+    const userData = await userServices.getUser(pid);
     setUserData(userData);
-    const blogsData = await firestoreApi.getCollection(
-      fireStoreCollections.users,
-      pid
+    const blogsData = await blogServices.getBlog(
+      where("uid", "==", userData?.uid)
     );
+
     setBlogsData(blogsData);
   };
 
