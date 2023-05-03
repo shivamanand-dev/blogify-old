@@ -18,8 +18,8 @@ function CreatePost() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const [editorContent, setEditorContent] = useState("");
-  const [blogHeading, setBlogHeading] = useState("");
+  const [editorContent, setEditorContent] = useState();
+  const [blogHeading, setBlogHeading] = useState();
 
   const [currentStaticHeading, setCurrentStaticHeading] = useState({
     heading: "",
@@ -49,7 +49,7 @@ function CreatePost() {
   ];
 
   const handleSaveBlog = async () => {
-    if (editorContent) {
+    if (editorContent && blogHeading) {
       await firestoreApi.addCollection(
         fireStoreCollections.blogs,
         usersDataState?.user?.email,
