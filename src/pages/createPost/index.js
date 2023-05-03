@@ -78,8 +78,8 @@ function CreatePost() {
     <StyledCreatePost>
       <h4>{currentStaticHeading.heading}</h4>
       <div className="heading">
-        {currentStaticHeading.label}
-        <InputField placeholder="Post Heading" />
+        {/* {currentStaticHeading.label} */}
+        <InputField placeholder={currentStaticHeading.label} />
       </div>
       <TextEditor
         handleSaveBlog={handleSaveBlog}
