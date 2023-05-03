@@ -14,6 +14,7 @@ import { setUser, userState } from "@/redux/userSlice";
 import { fireStoreCollections } from "@/utils/constants/app_constants";
 import app from "@/utils/firebase";
 import { firestoreApi } from "@/utils/firebase/firestore";
+import { userServices } from "@/utils/firebase/services/userServices";
 
 function Profile() {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ function Profile() {
   const [selectedHashTags, setSelectedHashTags] = useState([]);
 
   const getData = async (pid) => {
-    const userData = await firestoreApi.getDocument(
+    const userData = await userServices.getUser(
       fireStoreCollections.users,
       pid
     );
@@ -60,7 +61,7 @@ function Profile() {
           displayName: displayName,
         }
       );
-      const updatedData = await firestoreApi.getDocument(
+      const updatedData = await userServices.getUser(
         fireStoreCollections.users,
         router.query.pid
       );

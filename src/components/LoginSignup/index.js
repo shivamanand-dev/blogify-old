@@ -7,6 +7,7 @@ import { setUser } from "@/redux/userSlice";
 import { fireStoreCollections } from "@/utils/constants/app_constants";
 import { authApi } from "@/utils/firebase/auth";
 import { firestoreApi } from "@/utils/firebase/firestore";
+import { userServices } from "@/utils/firebase/services/userServices";
 
 import { PrimaryButton } from "../Buttons";
 import InputField from "../InputField";
@@ -33,9 +34,9 @@ function LoginSignup({ activeForm = "login" }) {
 
     if (data.user) {
       if (activeForm === "signUp") {
-        await firestoreApi.addDocument(
+        await userServices.addUser(
           data.user.email,
-          fireStoreCollections.users,
+
           {
             email: data.user.email,
             uid: data.user.uid,
@@ -45,7 +46,6 @@ function LoginSignup({ activeForm = "login" }) {
         );
 
         await firestoreApi.addCollection(
-          fireStoreCollections.users,
           fireStoreCollections.blogs,
           data.user.email,
           {
@@ -56,14 +56,8 @@ function LoginSignup({ activeForm = "login" }) {
         );
       }
 
-      const userData = await firestoreApi.getDocument(
-        fireStoreCollections.users,
-        data.user.email
-      );
-      const blogsData = await firestoreApi.getCollection(
-        fireStoreCollections.users,
-        data.user.email
-      );
+      const userData = await userServices.getUser(data.user.email);
+      const blogsData = await firestoreApi.getCollection(data.user.email);
 
       dispatch(setUser(userData));
       dispatch(setBlogs(blogsData));
