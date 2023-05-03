@@ -2,12 +2,11 @@ import { Editor } from "@tinymce/tinymce-react";
 
 import { tinyMCE } from "@/utils/constants/app_config";
 
-import { PrimaryButton } from "../Buttons";
-
-function TextEditor({ handleSaveBlog, setEditorContent, editorContent }) {
+function TextEditor({ setEditorContent, editorContent }) {
   const editorConfig = {
     plugins: "codesample",
     toolbar: "codesample",
+    resize: false,
     skin: "oxide-dark",
     content_css: "dark",
     codesample_languages: [
@@ -39,8 +38,6 @@ function TextEditor({ handleSaveBlog, setEditorContent, editorContent }) {
         apiKey={tinyMCE}
         toolbar="undo redo | bold italic codesample | alignleft aligncenter alignright | bullist numlist outdent indent"
       />
-
-      <PrimaryButton buttonText="Post" onClick={handleSaveBlog} />
     </>
   );
 }

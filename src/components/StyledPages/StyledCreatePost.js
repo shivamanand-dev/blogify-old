@@ -7,4 +7,8 @@ export const StyledCreatePost = styled.section`
     font-size: 2.5rem;
     margin-bottom: 2rem;
   }
+
+  .label {
+    align-items: flex-start;
+  }
 `;

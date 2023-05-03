@@ -1,8 +1,10 @@
 /* eslint-disable security/detect-object-injection */
+import StarRateIcon from "@mui/icons-material/StarRate";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { PrimaryButton } from "@/components/Buttons";
 import InputField from "@/components/InputField";
 import { StyledCreatePost } from "@/components/StyledPages/StyledCreatePost";
 import TextEditor from "@/components/TextEditor";
@@ -16,7 +18,9 @@ function CreatePost() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const [editorContent, setEditorContent] = useState();
+  const [editorContent, setEditorContent] = useState("");
+  const [blogHeading, setBlogHeading] = useState("");
+
   const [currentStaticHeading, setCurrentStaticHeading] = useState({
     heading: "",
     label: "",
@@ -50,7 +54,7 @@ function CreatePost() {
         fireStoreCollections.blogs,
         usersDataState?.user?.email,
         {
-          title: "fds",
+          title: blogHeading,
           content: editorContent,
           lastEdited: firestoreApi.now,
         }
@@ -77,14 +81,27 @@ function CreatePost() {
   return (
     <StyledCreatePost>
       <h4>{currentStaticHeading.heading}</h4>
-      <div className="heading">
+      <div className="label flex">
         {/* {currentStaticHeading.label} */}
-        <InputField placeholder={currentStaticHeading.label} />
+        <InputField
+          placeholder={currentStaticHeading.label}
+          required={true}
+          value={blogHeading}
+          onChange={(e) => setBlogHeading(e.target.value)}
+        />
+        <StarRateIcon color="error" fontSize="5px" />
       </div>
       <TextEditor
         handleSaveBlog={handleSaveBlog}
         setEditorContent={setEditorContent}
         editorContent={editorContent}
+      />
+
+      <PrimaryButton
+        buttonText="Publish"
+        onClick={handleSaveBlog}
+        customStyle={{ marginTop: "2rem", width: "100%" }}
+        disabled={editorContent && blogHeading ? false : true}
       />
     </StyledCreatePost>
   );
