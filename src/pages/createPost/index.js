@@ -51,6 +51,7 @@ function CreatePost() {
   const handleSaveBlog = async () => {
     if (editorContent && blogHeading) {
       await firestoreApi.addCollection(
+        fireStoreCollections.users,
         fireStoreCollections.blogs,
         usersDataState?.user?.email,
         {
@@ -61,6 +62,7 @@ function CreatePost() {
       );
 
       const blogsData = await firestoreApi.getCollection(
+        fireStoreCollections.users,
         usersDataState?.user?.email
       );
 

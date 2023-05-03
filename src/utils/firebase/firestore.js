@@ -13,31 +13,30 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-import { fireStoreCollections } from "../constants/app_constants";
 import app from ".";
 
 const db = getFirestore(app);
 
-const addDocument = async (email, data) => {
-  const docRef = doc(db, fireStoreCollections.users, email);
+const addDocument = async (email, collectionName, data) => {
+  const docRef = doc(db, collectionName, email);
   await setDoc(docRef, data);
 };
 
-const addCollection = async (newCollection, email, data) => {
-  const docRef = doc(db, fireStoreCollections.users, email);
+const addCollection = async (collectionName, newCollection, email, data) => {
+  const docRef = doc(db, collectionName, email);
 
   await addDoc(collection(docRef, newCollection), data);
 };
 
-const getDocument = async (email) => {
-  const docRef = doc(db, fireStoreCollections.users, email);
+const getDocument = async (collectionName, email) => {
+  const docRef = doc(db, collectionName, email);
   const data = await getDoc(docRef);
 
   return data.data();
 };
 
-const getCollection = async (email) => {
-  const docRef = doc(db, fireStoreCollections.users, email);
+const getCollection = async (collectionName, email) => {
+  const docRef = doc(db, collectionName, email);
   const subCollection = collection(docRef, "Blogs");
 
   const myQuery = query(subCollection, orderBy("lastEdited", "desc"), limit(5));
@@ -60,14 +59,19 @@ const getCollection = async (email) => {
     });
 };
 
-const updateData = async (email, data) => {
-  const docRef = doc(db, fireStoreCollections.users, email);
+const updateData = async (collectionName, email, data) => {
+  const docRef = doc(db, collectionName, email);
 
   return await updateDoc(docRef, data);
 };
 
-const updateCollectionData = async (mySubcollection, email, data) => {
-  const docRef = doc(db, fireStoreCollections.users, email);
+const updateCollectionData = async (
+  collectionName,
+  mySubcollection,
+  email,
+  data
+) => {
+  const docRef = doc(db, collectionName, email);
 
   const myCollection = collection(docRef, mySubcollection);
 

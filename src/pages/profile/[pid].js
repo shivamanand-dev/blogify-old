@@ -11,6 +11,7 @@ import { StyledProfile } from "@/components/StyledPages";
 import UserAccountInfo from "@/components/UserAccountInfo";
 import { blogsState } from "@/redux/blogsSlice";
 import { setUser, userState } from "@/redux/userSlice";
+import { fireStoreCollections } from "@/utils/constants/app_constants";
 import app from "@/utils/firebase";
 import { firestoreApi } from "@/utils/firebase/firestore";
 
@@ -30,9 +31,15 @@ function Profile() {
   const [selectedHashTags, setSelectedHashTags] = useState([]);
 
   const getData = async (pid) => {
-    const userData = await firestoreApi.getDocument(pid);
+    const userData = await firestoreApi.getDocument(
+      fireStoreCollections.users,
+      pid
+    );
     setUserData(userData);
-    const blogsData = await firestoreApi.getCollection(pid);
+    const blogsData = await firestoreApi.getCollection(
+      fireStoreCollections.users,
+      pid
+    );
     setBlogsData(blogsData);
   };
 
@@ -46,10 +53,17 @@ function Profile() {
       userData?.displayName !== displayName &&
       userDataState?.user?.email === userData?.email
     ) {
-      await firestoreApi.updateData(router.query.pid, {
-        displayName: displayName,
-      });
-      const updatedData = await firestoreApi.getDocument(router.query.pid);
+      await firestoreApi.updateData(
+        fireStoreCollections.users,
+        router.query.pid,
+        {
+          displayName: displayName,
+        }
+      );
+      const updatedData = await firestoreApi.getDocument(
+        fireStoreCollections.users,
+        router.query.pid
+      );
       dispatch(setUser(updatedData));
     }
     switchProfileModal();
