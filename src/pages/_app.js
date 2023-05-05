@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 
 import { Container, NoSsr } from "@mui/material";
 import { getAuth } from "firebase/auth";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Provider } from "react-redux";
@@ -38,6 +39,14 @@ export default function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
+        <Head>
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1938389227797119"
+            crossorigin="anonymous"
+            lazyOnload
+          ></script>
+        </Head>
         <ThemeProvider theme={theme}>
           <NoSsr>
             <MainNavbar />
