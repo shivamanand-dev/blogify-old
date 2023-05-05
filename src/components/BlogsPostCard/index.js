@@ -19,7 +19,12 @@ function BlogsPostCard({ title, content }) {
           {Parser(content)}
         </CardContent>
         <CardActions>
-          <PrimaryButton size="small" buttonText="Learn More" />
+          <PrimaryButton
+            color="warning"
+            variant="text"
+            size="small"
+            buttonText="Learn More"
+          />
         </CardActions>
       </Card>
     </StyledBlogsPostCard>
