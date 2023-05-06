@@ -76,6 +76,7 @@ function CreatePost() {
       heading: heading[randomNumber],
       label: labelMessage[randomNumber],
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

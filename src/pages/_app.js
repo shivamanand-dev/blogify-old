@@ -34,6 +34,7 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     routeCheck();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
