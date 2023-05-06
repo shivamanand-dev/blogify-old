@@ -18,6 +18,7 @@ function LoginSignup({ activeForm = "login" }) {
   const dispatch = useDispatch();
 
   const [loginDetails, setLoginDetails] = useState({
+    displayName: "",
     email: "",
     password: "",
   });
@@ -27,41 +28,64 @@ function LoginSignup({ activeForm = "login" }) {
   };
 
   const onClickSubmit = async () => {
-    const data =
-      activeForm === "login"
-        ? await authApi.loginUser(loginDetails)
-        : await authApi.createUser(loginDetails);
+    if (
+      loginDetails.displayName.length !== 0 &&
+      loginDetails.email.length !== 0 &&
+      loginDetails.password.length !== 6
+    ) {
+      const authDetails = {
+        email: loginDetails.email,
+        password: loginDetails.password,
+      };
+      const data =
+        activeForm === "login"
+          ? await authApi.loginUser(authDetails)
+          : await authApi.createUser(authDetails);
 
-    if (data.user) {
-      if (activeForm === "signUp") {
-        await userServices.addUser(
-          data.user.email,
+      if (data.user) {
+        if (activeForm === "signUp") {
+          await userServices.addUser(
+            data.user.email,
 
-          {
-            email: data.user.email,
-            uid: data.user.uid,
-            profileImageUrl:
-              "https://firebasestorage.googleapis.com/v0/b/blogify-9a1bd.appspot.com/o/anonymous.png?alt=media&token=4b23045c-6f36-4054-a026-02922bff24c6",
-          }
+            {
+              displayName: loginDetails.displayName,
+              email: data.user.email,
+              uid: data.user.uid,
+              profileImageUrl:
+                "https://firebasestorage.googleapis.com/v0/b/blogify-9a1bd.appspot.com/o/anonymous.png?alt=media&token=4b23045c-6f36-4054-a026-02922bff24c6",
+            }
+          );
+        }
+
+        const userData = await userServices.getUser(data.user.email);
+        const blogsData = await blogServices.getBlog(
+          where("uid", "==", data.user.uid)
         );
+
+        dispatch(setUser(userData));
+        dispatch(setBlogs(blogsData));
+        router.push("/feed");
+      } else {
+        alert(data);
       }
-
-      const userData = await userServices.getUser(data.user.email);
-      const blogsData = await blogServices.getBlog(
-        where("uid", "==", data.user.uid)
-      );
-
-      dispatch(setUser(userData));
-      dispatch(setBlogs(blogsData));
-      router.push("/feed");
-    } else {
-      alert(data);
     }
   };
   return (
     <StyledLoginSignup>
-      <InputField name="email" onChange={onChangeInput} />
-      <InputField name="password" type="password" onChange={onChangeInput} />
+      {activeForm === "signUp" && (
+        <InputField
+          name="displayName"
+          placeholder="Name"
+          onChange={onChangeInput}
+        />
+      )}
+      <InputField name="email" placeholder="Email" onChange={onChangeInput} />
+      <InputField
+        name="password"
+        type="password"
+        placeholder="Password"
+        onChange={onChangeInput}
+      />
 
       <PrimaryButton buttonText={activeForm} onClick={onClickSubmit} />
     </StyledLoginSignup>

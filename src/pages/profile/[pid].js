@@ -14,7 +14,6 @@ import { blogsState } from "@/redux/blogsSlice";
 import { setUser, userState } from "@/redux/userSlice";
 import { fireStoreCollections } from "@/utils/constants/app_constants";
 import app from "@/utils/firebase";
-import { firestoreApi } from "@/utils/firebase/firestore";
 import { blogServices } from "@/utils/firebase/services/blogServices";
 import { userServices } from "@/utils/firebase/services/userServices";
 
@@ -53,7 +52,7 @@ function Profile() {
       userData?.displayName !== displayName &&
       userDataState?.user?.email === userData?.email
     ) {
-      await firestoreApi.updateData(
+      await userServices.updateUser(
         fireStoreCollections.users,
         router.query.pid,
         {

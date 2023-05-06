@@ -9,6 +9,9 @@ const StyledInputField = styled.section`
     width: 100%;
     color: ${({ theme }) => theme.COLORS.LIGHTS_COLOR};
   }
+  .css-q0jhri-MuiInputBase-root-MuiInput-root:before {
+    border-color: ${({ theme }) => theme.COLORS.LIGHTS_COLOR} !important;
+  }
 `;
 
 export default StyledInputField;
