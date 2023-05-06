@@ -28,7 +28,7 @@ const getBlog = async (condition) => {
     myQuery = query(
       collectionRef,
       orderBy("lastEdited", "desc"),
-      limit(5),
+      limit(15),
       // where("uid", "==", "R7SlgSZKSaswVl2vPBHj1fXkdzixl2")
       condition
     );
