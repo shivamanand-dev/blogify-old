@@ -28,11 +28,7 @@ function LoginSignup({ activeForm = "login" }) {
   };
 
   const onClickSubmit = async () => {
-    if (
-      loginDetails.displayName.length !== 0 &&
-      loginDetails.email.length !== 0 &&
-      loginDetails.password.length !== 6
-    ) {
+    if (loginDetails.email.length !== 0 && loginDetails.password.length !== 6) {
       const authDetails = {
         email: loginDetails.email,
         password: loginDetails.password,
@@ -40,9 +36,11 @@ function LoginSignup({ activeForm = "login" }) {
       const data =
         activeForm === "login"
           ? await authApi.loginUser(authDetails)
-          : await authApi.createUser(authDetails);
+          : loginDetails.displayName.length !== 0
+          ? await authApi.createUser(authDetails)
+          : alert("Name is Empty");
 
-      if (data.user) {
+      if (data?.user) {
         if (activeForm === "signUp") {
           await userServices.addUser(
             data.user.email,
