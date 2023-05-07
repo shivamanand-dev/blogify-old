@@ -9,7 +9,6 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { ThemeProvider } from "styled-components";
 
-import CreatePostButton from "@/components/CreatePostButton";
 import MainNavbar from "@/components/MainNavbar";
 import { persistor, store } from "@/redux/store";
 import { lockedRoutes } from "@/utils/constants/app_constants";
@@ -55,7 +54,6 @@ export default function App({ Component, pageProps }) {
             <Container>
               <Component {...pageProps} />
             </Container>
-            <CreatePostButton />
           </NoSsr>
         </ThemeProvider>
       </PersistGate>

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import BlogsPostCard from "@/components/BlogsPostCard";
+import CreatePostButton from "@/components/CreatePostButton";
 import StckChip from "@/components/StackChip";
 import { StyledProfile } from "@/components/StyledPages";
 import UserAccountInfo from "@/components/UserAccountInfo";
@@ -144,6 +145,7 @@ function Profile() {
           </div>
         </div>
       </div>
+      <CreatePostButton />
     </StyledProfile>
   );
 }

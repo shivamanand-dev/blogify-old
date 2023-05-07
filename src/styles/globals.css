@@ -123,6 +123,10 @@ body {
   display: flex;
   align-items: center;
 }
+
+.alignItemsTop {
+  align-items: flex-start;
+}
 .tox-statusbar__branding {
   display: none;
 }

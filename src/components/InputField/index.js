@@ -1,3 +1,4 @@
+import StarRateIcon from "@mui/icons-material/StarRate";
 import { Input } from "@mui/material";
 
 import StyledInputField from "./StyledInputField";
@@ -22,6 +23,7 @@ function InputField({
         onChange={onChange}
         error={error}
         name={name}
+        endAdornment={required && <StarRateIcon color="error" fontSize="5px" />}
       />
     </StyledInputField>
   );
