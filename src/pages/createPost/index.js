@@ -1,5 +1,4 @@
 /* eslint-disable security/detect-object-injection */
-import StarRateIcon from "@mui/icons-material/StarRate";
 import { where } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -8,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { PrimaryButton } from "@/components/Buttons";
 import InputField from "@/components/InputField";
 import { StyledCreatePost } from "@/components/StyledPages/StyledCreatePost";
+import TextArea from "@/components/TextArea";
 import TextEditor from "@/components/TextEditor";
 import { setBlogs } from "@/redux/blogsSlice";
 import { userState } from "@/redux/userSlice";
@@ -20,7 +20,10 @@ function CreatePost() {
   const userStateData = useSelector(userState);
 
   const [editorContent, setEditorContent] = useState();
-  const [blogHeading, setBlogHeading] = useState();
+  const [blogContent, setBlogContent] = useState({
+    heading: "",
+    description: "",
+  });
 
   const [currentStaticHeading, setCurrentStaticHeading] = useState({
     heading: "",
@@ -50,13 +53,17 @@ function CreatePost() {
   ];
 
   const handleSaveBlog = async () => {
-    if (editorContent && blogHeading) {
+    if (
+      editorContent &&
+      blogContent.heading.length !== 0 &&
+      blogContent.description.length !== 0
+    ) {
       await blogServices.createBlog({
-        title: blogHeading,
+        title: blogContent.heading,
+        description: blogContent.description,
         content: editorContent,
         lastEdited: firestoreApi.now,
         email: userStateData?.user?.email,
-        displayName: userStateData?.user?.displayName,
         uid: userStateData?.user?.uid,
       });
 
@@ -68,6 +75,10 @@ function CreatePost() {
 
       router.push("/feed");
     }
+  };
+
+  const onChangeBlogContent = (e) => {
+    setBlogContent({ ...blogContent, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
@@ -82,16 +93,20 @@ function CreatePost() {
   return (
     <StyledCreatePost>
       <h4>{currentStaticHeading.heading}</h4>
-      <div className="label flex">
-        {/* {currentStaticHeading.label} */}
-        <InputField
-          placeholder={currentStaticHeading.label}
-          required={true}
-          value={blogHeading}
-          onChange={(e) => setBlogHeading(e.target.value)}
-        />
-        <StarRateIcon color="error" fontSize="5px" />
-      </div>
+      <InputField
+        placeholder={currentStaticHeading.label}
+        required={true}
+        value={blogContent.heading}
+        name="heading"
+        onChange={onChangeBlogContent}
+      />
+      <TextArea
+        placeholder="A Description About your Blog"
+        required={true}
+        value={blogContent.description}
+        name="description"
+        onChange={onChangeBlogContent}
+      />
       <TextEditor
         handleSaveBlog={handleSaveBlog}
         setEditorContent={setEditorContent}
@@ -102,7 +117,15 @@ function CreatePost() {
         buttonText="Publish"
         onClick={handleSaveBlog}
         customStyle={{ marginTop: "2rem", width: "100%" }}
-        disabled={editorContent && blogHeading ? false : true}
+        disabled={
+          editorContent
+            ? blogContent.heading.length !== 0
+              ? blogContent.description.length !== 0
+                ? false
+                : true
+              : true
+            : true
+        }
       />
     </StyledCreatePost>
   );
