@@ -205,7 +205,7 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
                   <IconButton size="large" color="inherit">
                     <BungalowIcon
                       onClick={() => {
-                        router.push(app_routes.feed);
+                        router.push(app_routes.explore);
                       }}
                     />
                   </IconButton>
