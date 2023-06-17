@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import BlogsPostCard from "@/components/BlogsPostCard";
+import { StyledExplorePage } from "@/components/StyledPages";
+import { setLoading } from "@/redux/userSlice";
 import { blogServices } from "@/utils/firebase/services/blogServices";
 
 function ExplorePage() {
+  const dispatch = useDispatch();
+
   const [blogsData, setblogsData] = useState([]);
+
   const getBlogs = async () => {
+    dispatch(setLoading(true));
     const data = await blogServices.getBlog();
     setblogsData(data);
+    dispatch(setLoading(false));
   };
 
   useEffect(() => {
@@ -15,8 +23,8 @@ function ExplorePage() {
   }, []);
 
   return (
-    <div>
-      <h3>Explore</h3>
+    <StyledExplorePage>
+      <h3 className="heading">Explore</h3>
 
       {blogsData.map((e, i) => {
         return (
@@ -27,7 +35,7 @@ function ExplorePage() {
           />
         );
       })}
-    </div>
+    </StyledExplorePage>
   );
 }
 
