@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { PrimaryButton } from "@/components/Buttons";
 import InputField from "@/components/InputField";
-import { StyledCreatePost } from "@/components/StyledPages/StyledCreatePost";
+import { StyledCreatePost } from "@/components/StyledPages";
 import TextArea from "@/components/TextArea";
 import TextEditor from "@/components/TextEditor";
 import { setBlogs } from "@/redux/blogsSlice";
