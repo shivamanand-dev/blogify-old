@@ -32,6 +32,7 @@ function ExplorePage() {
             key={i}
             title={e.data.title}
             description={e.data.description}
+            uid={e.id}
           />
         );
       })}
