@@ -9,7 +9,7 @@ import { blogServices } from "@/utils/firebase/services/blogServices";
 function ExplorePage() {
   const dispatch = useDispatch();
 
-  const [blogsData, setblogsData] = useState([]);
+  const [blogsData, setblogsData] = useState();
 
   const getBlogs = async () => {
     dispatch(setLoading(true));
@@ -26,7 +26,7 @@ function ExplorePage() {
     <StyledExplorePage>
       <h3 className="heading">Explore</h3>
 
-      {blogsData.map((e, i) => {
+      {blogsData?.map((e, i) => {
         return (
           <BlogsPostCard
             key={i}

@@ -10,4 +10,4 @@ export const app_routes = {
   blog: "/blog",
 };
 
-export const lockedRoutes = [app_routes.profile, "/profile/[pid]"];
+export const lockedRoutes = ["/profile/[pid]"];

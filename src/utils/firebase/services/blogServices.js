@@ -2,6 +2,7 @@ import {
   addDoc,
   collection,
   doc,
+  getDoc,
   getDocs,
   getFirestore,
   limit,
@@ -33,7 +34,7 @@ const getBlog = async (condition) => {
       condition
     );
   } else {
-    myQuery = query(collectionRef, orderBy("lastEdited", "desc"), limit(5));
+    myQuery = query(collectionRef, orderBy("lastEdited", "desc"), limit(15));
   }
 
   return await getDocs(myQuery)
@@ -54,6 +55,12 @@ const getBlog = async (condition) => {
     });
 };
 
+const getSinglePost = async (uid) => {
+  const docRef = doc(db, fireStoreCollections.blogs, uid);
+  const data = await getDoc(docRef);
+  return data.data();
+};
+
 const updateBlog = async (uid, data) => {
   const docRef = doc(db, fireStoreCollections.blogs, uid);
 
@@ -66,4 +73,4 @@ const updateBlog = async (uid, data) => {
     });
 };
 
-export const blogServices = { createBlog, getBlog, updateBlog };
+export const blogServices = { createBlog, getBlog, updateBlog, getSinglePost };
