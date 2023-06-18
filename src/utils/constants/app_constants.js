@@ -6,11 +6,8 @@ export const app_routes = {
   login: "/login",
   signup: "/signup",
   profile: "/profile",
-  feed: "/feed",
+  explore: "/explore",
+  blog: "/blog",
 };
 
-export const lockedRoutes = [
-  app_routes.profile,
-  "/profile/[pid]",
-  app_routes.feed,
-];
+export const lockedRoutes = ["/profile/[pid]"];

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Typography } from "@mui/material";
 import { getAuth } from "firebase/auth";
 import { where } from "firebase/firestore";
@@ -126,12 +125,6 @@ function Profile() {
           />
         </div>
         <div className="posts-container">
-          {/* <PrimaryButton
-            buttonText="Create Post"
-            
-            customStyle={{ marginBottom: "1rem" }}
-          /> */}
-
           <div className="posts">
             {blogsData?.map((e) => {
               return (

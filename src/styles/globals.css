@@ -130,3 +130,10 @@ body {
 .tox-statusbar__branding {
   display: none;
 }
+
+.progressBar {
+  position: absolute;
+  top: 0;
+  z-index: 999999;
+  width: 100%;
+}
