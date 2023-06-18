@@ -132,6 +132,7 @@ function Profile() {
                   key={e.id}
                   title={e.data.title}
                   content={e.data.content}
+                  uid={e.id}
                 />
               );
             })}
