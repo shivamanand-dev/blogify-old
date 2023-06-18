@@ -126,12 +126,6 @@ function Profile() {
           />
         </div>
         <div className="posts-container">
-          {/* <PrimaryButton
-            buttonText="Create Post"
-            
-            customStyle={{ marginBottom: "1rem" }}
-          /> */}
-
           <div className="posts">
             {blogsData?.map((e) => {
               return (

@@ -168,14 +168,22 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <IconButton size="large" color="inherit" className="bunglowBtn">
+                <BungalowIcon
+                  size="large"
+                  edge="end"
+                  onClick={() => {
+                    router.push(app_routes.explore);
+                  }}
+                  sx={{ padding: 0 }}
+                />
+              </IconButton>
+
               {!state?.user && (
                 <>
                   <IconButton
                     size="large"
                     edge="end"
-                    aria-label="account of current user"
-                    // aria-controls={menuId}
-                    aria-haspopup="true"
                     onClick={() => {
                       sendToRoute(app_routes.login);
                     }}
@@ -198,17 +206,10 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
                   </IconButton>
                 </>
               )}
+
               {state?.user && (
                 <>
                   <InputField placeholder="Search Email" />
-
-                  <IconButton size="large" color="inherit">
-                    <BungalowIcon
-                      onClick={() => {
-                        router.push(app_routes.explore);
-                      }}
-                    />
-                  </IconButton>
 
                   <IconButton
                     size="large"
