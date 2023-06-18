@@ -2,12 +2,13 @@ import { Editor } from "@tinymce/tinymce-react";
 
 import { tinyMCE } from "@/utils/constants/app_config";
 
-function TextEditor({ setEditorContent, editorContent }) {
+import { StyledBlogPreview } from "./StyledBlogPreview";
+
+function BlogPreview({ content }) {
   const editorConfig = {
     plugins:
       "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
-    toolbar:
-      "undo redo | emoticons | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | charmap | removeformat",
+    toolbar: "",
     resize: false,
     skin: "oxide-dark",
     content_css: "dark",
@@ -25,23 +26,20 @@ function TextEditor({ setEditorContent, editorContent }) {
       { text: "Swift", value: "swift" },
       { text: "SQL", value: "sql" },
     ],
-    keep_styles: true,
   };
-
-  const handleEditorChange = (content) => {
-    setEditorContent(content);
-  };
-
   return (
-    <>
-      <Editor
-        init={editorConfig}
-        onEditorChange={handleEditorChange}
-        value={editorContent}
-        apiKey={tinyMCE}
-      />
-    </>
+    <StyledBlogPreview>
+      {content && (
+        <Editor
+          apiKey={tinyMCE}
+          value={content}
+          init={editorConfig}
+          disabled={true}
+          // onEditorChange={handleEditorChange}
+        />
+      )}
+    </StyledBlogPreview>
   );
 }
 
-export default TextEditor;
+export default BlogPreview;
