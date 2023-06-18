@@ -11,6 +11,7 @@ import TextArea from "@/components/TextArea";
 import TextEditor from "@/components/TextEditor";
 import { setBlogs } from "@/redux/blogsSlice";
 import { userState } from "@/redux/userSlice";
+import { app_routes } from "@/utils/constants/app_constants";
 import { firestoreApi } from "@/utils/firebase/firestore";
 import { blogServices } from "@/utils/firebase/services/blogServices";
 
@@ -73,7 +74,7 @@ function CreatePost() {
 
       dispatch(setBlogs(blogsData));
 
-      router.push("/feed");
+      router.push(app_routes.explore);
     }
   };
 
