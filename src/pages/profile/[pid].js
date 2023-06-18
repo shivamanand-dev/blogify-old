@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Typography } from "@mui/material";
 import { getAuth } from "firebase/auth";
 import { where } from "firebase/firestore";
