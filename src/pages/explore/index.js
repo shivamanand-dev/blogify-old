@@ -10,17 +10,22 @@ function ExplorePage() {
   const dispatch = useDispatch();
 
   const [blogsData, setblogsData] = useState();
+  const [postLimit, setpostLimit] = useState(5);
 
-  const getBlogs = async () => {
+  const getBlogs = async (limit) => {
     dispatch(setLoading(true));
-    const data = await blogServices.getBlog();
+    const data = await blogServices.getBlog(undefined, limit);
     setblogsData(data);
     dispatch(setLoading(false));
   };
 
+  const loadMoreData = async () => {
+    setpostLimit(postLimit + 5);
+  };
+
   useEffect(() => {
-    getBlogs();
-  }, []);
+    getBlogs(postLimit);
+  }, [postLimit]);
 
   return (
     <StyledExplorePage>
@@ -36,6 +41,8 @@ function ExplorePage() {
           />
         );
       })}
+
+      <button onClick={loadMoreData}>Load More</button>
     </StyledExplorePage>
   );
 }
