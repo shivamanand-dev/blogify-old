@@ -56,6 +56,7 @@ function ExplorePage() {
               title={e.data.title}
               description={e.data.description}
               uid={e.id}
+              email={e.data.email}
             />
           );
         })}
