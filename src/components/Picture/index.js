@@ -1,15 +1,26 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable @next/next/no-img-element */
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import UploadPicture from "../ChanegeProfilePicModal";
+import { setOpenUploadPictureModal, userState } from "@/redux/userSlice";
+
+import UploadPicture from "../UploadPicture";
 import { StyledPicture } from "./StyledPicture";
 
-function Picture({ src, rounded = false, customStyle = {} }) {
-  const [openChangeDpModal, setOpenChangeDpModal] = useState(false);
+function Picture({
+  src,
+  rounded = false,
+  customStyle = {},
+  onSubmit,
+  setFileType,
+  setNewPictureFile,
+  newPictureFile,
+}) {
+  const userStateData = useSelector(userState);
+  const dispatch = useDispatch();
 
   const switchModal = () => {
-    setOpenChangeDpModal(!openChangeDpModal);
+    dispatch(setOpenUploadPictureModal(!userStateData.openUploadPictureModal));
   };
   return (
     <StyledPicture rounded={rounded} style={customStyle}>
@@ -21,13 +32,17 @@ function Picture({ src, rounded = false, customStyle = {} }) {
         alt=""
       />
 
-      {openChangeDpModal && (
+      {userStateData.openUploadPictureModal && (
         <UploadPicture
-          open={openChangeDpModal}
+          open={userStateData.openUploadPictureModal}
           handleClose={switchModal}
           title="Upload Profile Pic"
           currentImage={src}
           rounded={true}
+          onSubmit={onSubmit}
+          setFileType={setFileType}
+          setNewPictureFile={setNewPictureFile}
+          newPictureFile={newPictureFile}
         />
       )}
     </StyledPicture>
