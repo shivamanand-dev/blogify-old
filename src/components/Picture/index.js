@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from "react";
 
-import ChanegeProfilePicModal from "../ChanegeProfilePicModal";
+import UploadPicture from "../ChanegeProfilePicModal";
 import { StyledPicture } from "./StyledPicture";
 
 function Picture({ src, rounded = false, customStyle = {} }) {
@@ -21,10 +21,15 @@ function Picture({ src, rounded = false, customStyle = {} }) {
         alt=""
       />
 
-      <ChanegeProfilePicModal
-        open={openChangeDpModal}
-        handleClose={switchModal}
-      />
+      {openChangeDpModal && (
+        <UploadPicture
+          open={openChangeDpModal}
+          handleClose={switchModal}
+          title="Upload Profile Pic"
+          currentImage={src}
+          rounded={true}
+        />
+      )}
     </StyledPicture>
   );
 }

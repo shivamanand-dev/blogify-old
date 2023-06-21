@@ -1,8 +1,36 @@
+/* eslint-disable @next/next/no-img-element */
 import { Modal } from "@mui/material";
+import { useState } from "react";
 
-import { StyledChangeProfilePicModal } from "./StyledChangeProfilePicModal";
+import { PrimaryButton } from "../Buttons";
+import InputField from "../InputField";
+import { StyledUploadPicture } from "./StyledUploadPicture";
 
-function ChangeProfilePicModal({ open, handleClose }) {
+function UploadPicture({
+  open,
+  handleClose,
+  title,
+  currentImage,
+  rounded = false,
+}) {
+  const [currentProfilePic, setCurrentProfilePic] = useState(currentImage);
+  const [newProfilePicFile, setNewProfilePicFile] = useState();
+
+  const onChangeProfilePic = (e) => {
+    const file = e.target.files[0];
+
+    setNewProfilePicFile(file);
+
+    const reader = new FileReader();
+    // const url = reader.readAsDataURL(file);
+
+    reader.addEventListener("load", () => {
+      setCurrentProfilePic(reader.result);
+    });
+
+    reader.readAsDataURL(file);
+    // const updatedLogo = file.
+  };
   return (
     <Modal
       keepMounted
@@ -12,16 +40,29 @@ function ChangeProfilePicModal({ open, handleClose }) {
       aria-describedby="keep-mounted-modal-description"
       className="modalContainer"
     >
-      <StyledChangeProfilePicModal>
+      <StyledUploadPicture rounded={rounded}>
         <div className="box">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-          magni sed assumenda alias dicta. Laborum quo corrupti pariatur. Eum
-          quam maxime non alias aliquam consequuntur perferendis quidem voluptas
-          inventore tempora.
+          <div className="image-container">
+            <img
+              src={currentProfilePic}
+              height={50}
+              style={{ cursor: "pointer" }}
+              alt="profilePic"
+              className="profilePic"
+            />
+          </div>
+
+          <label htmlFor="profilePic">{title}</label>
+          <InputField
+            type="file"
+            name="profilePic"
+            onChange={onChangeProfilePic}
+          />
+          <PrimaryButton buttonText="Submit" disabled={!newProfilePicFile} />
         </div>
-      </StyledChangeProfilePicModal>
+      </StyledUploadPicture>
     </Modal>
   );
 }
 
-export default ChangeProfilePicModal;
+export default UploadPicture;
