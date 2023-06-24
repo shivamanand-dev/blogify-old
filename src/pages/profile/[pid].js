@@ -93,6 +93,7 @@ function Profile() {
     <StyledProfile>
       <UserAccountInfo
         src={userData?.profileImageUrl}
+        profileImageTitle={userData?.profileImageTitle}
         name={userData?.displayName || "Anonymous"}
         email={userData?.email || "Anonymous"}
         follower={userData?.followers?.length || "0"}

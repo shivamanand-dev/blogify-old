@@ -1,5 +1,10 @@
 /* eslint-disable no-console */
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 import storage from "../storage";
 
@@ -23,4 +28,15 @@ async function uploadToFirebase(
   });
 }
 
-export const storageServices = { uploadToFirebase };
+async function deleteFromFirebase(folder = "profile", fileName) {
+  const storageRef = ref(storage, `/${folder}/${fileName}`);
+
+  try {
+    await deleteObject(storageRef);
+    return { success: true };
+  } catch (error) {
+    return error;
+  }
+}
+
+export const storageServices = { uploadToFirebase, deleteFromFirebase };
