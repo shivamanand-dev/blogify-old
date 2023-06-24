@@ -1,8 +1,18 @@
 import DoneIcon from "@mui/icons-material/Done";
 import EditIcon from "@mui/icons-material/Edit";
 import { Typography } from "@mui/material";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import Picture from "@/components/Picture";
+import {
+  setLoading,
+  setOpenUploadPictureModal,
+  setUser,
+} from "@/redux/userSlice";
+import { storageServices } from "@/utils/firebase/services/storageServices";
+import { userServices } from "@/utils/firebase/services/userServices";
+import { createFileName } from "@/utils/utility/createFileName";
 
 import { PrimaryButton } from "../Buttons";
 import { StyledUserAccountInfo } from "./StyledUserAccountInfo";
@@ -20,10 +30,40 @@ function UserAccountInfo({
   displayName,
   showEditBtn = false,
 }) {
+  const dispatch = useDispatch();
+
+  const [fileType, setFileType] = useState();
+  const [newPictureFile, setNewPictureFile] = useState();
+
+  const onSubmit = async () => {
+    dispatch(setLoading(true));
+    const fileName = await createFileName();
+    const imageUploadRes = await storageServices.uploadToFirebase(
+      newPictureFile,
+      fileName,
+      "profile",
+      fileType
+    );
+
+    await userServices.updateUser(email, { profileImageUrl: imageUploadRes });
+
+    const updatedUserData = await userServices.getUser(email);
+
+    dispatch(setUser(updatedUserData));
+    dispatch(setOpenUploadPictureModal(false));
+    dispatch(setLoading(false));
+  };
   return (
     <StyledUserAccountInfo>
       <div className="flex">
-        <Picture src={src} rounded={true} />
+        <Picture
+          src={src}
+          rounded={true}
+          onSubmit={onSubmit}
+          setFileType={setFileType}
+          setNewPictureFile={setNewPictureFile}
+          newPictureFile={newPictureFile}
+        />
         <div>
           {!editProfile && (
             <Typography variant="h4" ml={3}>

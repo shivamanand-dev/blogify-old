@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 
 import { setBlogs } from "@/redux/blogsSlice";
 import { setUser } from "@/redux/userSlice";
+import { app_routes } from "@/utils/constants/app_constants";
 import { authApi } from "@/utils/firebase/auth";
 import { blogServices } from "@/utils/firebase/services/blogServices";
 import { userServices } from "@/utils/firebase/services/userServices";
@@ -62,7 +63,7 @@ function LoginSignup({ activeForm = "login" }) {
 
         dispatch(setUser(userData));
         dispatch(setBlogs(blogsData));
-        router.push("/feed");
+        router.push(app_routes.explore);
       } else {
         alert(data);
       }

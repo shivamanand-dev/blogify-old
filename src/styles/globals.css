@@ -130,3 +130,19 @@ body {
 .tox-statusbar__branding {
   display: none;
 }
+
+.progressBar {
+  position: absolute;
+  top: 0;
+  z-index: 999999;
+  width: 100%;
+}
+
+.modalContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+}

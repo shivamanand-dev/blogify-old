@@ -10,6 +10,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { ThemeProvider } from "styled-components";
 
 import MainNavbar from "@/components/MainNavbar";
+import ProgressBar from "@/components/ProgressBar";
 import { persistor, store } from "@/redux/store";
 import { lockedRoutes } from "@/utils/constants/app_constants";
 import app from "@/utils/firebase";
@@ -49,6 +50,7 @@ export default function App({ Component, pageProps }) {
         </Head>
         <ThemeProvider theme={theme}>
           <NoSsr>
+            <ProgressBar />
             <MainNavbar />
             <div style={{ height: "64px" }}></div>
             <Container>

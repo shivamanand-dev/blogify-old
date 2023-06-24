@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Typography } from "@mui/material";
 import { getAuth } from "firebase/auth";
 import { where } from "firebase/firestore";
@@ -13,7 +12,6 @@ import { StyledProfile } from "@/components/StyledPages";
 import UserAccountInfo from "@/components/UserAccountInfo";
 import { blogsState } from "@/redux/blogsSlice";
 import { setUser, userState } from "@/redux/userSlice";
-import { fireStoreCollections } from "@/utils/constants/app_constants";
 import app from "@/utils/firebase";
 import { blogServices } from "@/utils/firebase/services/blogServices";
 import { userServices } from "@/utils/firebase/services/userServices";
@@ -53,17 +51,10 @@ function Profile() {
       userData?.displayName !== displayName &&
       userDataState?.user?.email === userData?.email
     ) {
-      await userServices.updateUser(
-        fireStoreCollections.users,
-        router.query.pid,
-        {
-          displayName: displayName,
-        }
-      );
-      const updatedData = await userServices.getUser(
-        fireStoreCollections.users,
-        router.query.pid
-      );
+      await userServices.updateUser(router.query.pid, {
+        displayName: displayName,
+      });
+      const updatedData = await userServices.getUser(router.query.pid);
       dispatch(setUser(updatedData));
     }
     switchProfileModal();
@@ -126,12 +117,6 @@ function Profile() {
           />
         </div>
         <div className="posts-container">
-          {/* <PrimaryButton
-            buttonText="Create Post"
-            
-            customStyle={{ marginBottom: "1rem" }}
-          /> */}
-
           <div className="posts">
             {blogsData?.map((e) => {
               return (
@@ -139,6 +124,8 @@ function Profile() {
                   key={e.id}
                   title={e.data.title}
                   content={e.data.content}
+                  uid={e.id}
+                  email={userData?.displayName || e.data.email}
                 />
               );
             })}
