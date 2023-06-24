@@ -12,7 +12,6 @@ import { StyledProfile } from "@/components/StyledPages";
 import UserAccountInfo from "@/components/UserAccountInfo";
 import { blogsState } from "@/redux/blogsSlice";
 import { setUser, userState } from "@/redux/userSlice";
-import { fireStoreCollections } from "@/utils/constants/app_constants";
 import app from "@/utils/firebase";
 import { blogServices } from "@/utils/firebase/services/blogServices";
 import { userServices } from "@/utils/firebase/services/userServices";
@@ -52,17 +51,10 @@ function Profile() {
       userData?.displayName !== displayName &&
       userDataState?.user?.email === userData?.email
     ) {
-      await userServices.updateUser(
-        fireStoreCollections.users,
-        router.query.pid,
-        {
-          displayName: displayName,
-        }
-      );
-      const updatedData = await userServices.getUser(
-        fireStoreCollections.users,
-        router.query.pid
-      );
+      await userServices.updateUser(router.query.pid, {
+        displayName: displayName,
+      });
+      const updatedData = await userServices.getUser(router.query.pid);
       dispatch(setUser(updatedData));
     }
     switchProfileModal();
@@ -133,6 +125,7 @@ function Profile() {
                   title={e.data.title}
                   content={e.data.content}
                   uid={e.id}
+                  email={userData?.displayName || e.data.email}
                 />
               );
             })}

@@ -5,6 +5,7 @@ export const userSlice = createSlice({
   initialState: {
     user: null,
     loading: false,
+    openUploadPictureModal: false,
   },
 
   reducers: {
@@ -14,11 +15,15 @@ export const userSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
+    setOpenUploadPictureModal: (state, action) => {
+      state.openUploadPictureModal = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setUser, setLoading } = userSlice.actions;
+export const { setUser, setLoading, setOpenUploadPictureModal } =
+  userSlice.actions;
 
 export const userState = (state) => state?.user;
 

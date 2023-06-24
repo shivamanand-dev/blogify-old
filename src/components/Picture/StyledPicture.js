@@ -7,5 +7,6 @@ export const StyledPicture = styled.section`
     border-radius: ${(props) => (props.rounded ? "50%" : "4px")};
     object-fit: cover;
     object-position: top;
+    cursor: pointer;
   }
 `;
