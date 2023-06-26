@@ -21,8 +21,8 @@ function UserAccountInfo({
   src,
   name,
   email,
-  follower,
-  following,
+  // follower,
+  // following,
   // onClickSaveName,
   // setDisplayName,
   editProfile,
@@ -118,14 +118,14 @@ function UserAccountInfo({
         </div>
       </div>
 
-      <div className="flex" style={{ marginTop: 15 }}>
+      {/* <div className="flex" style={{ marginTop: 15 }}>
         <Typography variant="h6" ml={3}>
           Follower: {follower}
         </Typography>
         <Typography variant="h6" ml={3} className="following">
           Following: {following}
         </Typography>
-      </div>
+      </div> */}
     </StyledUserAccountInfo>
   );
 }
