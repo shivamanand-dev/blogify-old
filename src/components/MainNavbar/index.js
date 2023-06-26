@@ -1,14 +1,9 @@
 // import { MenuIcon, SearchIcon } from "@mui/icons-material";
 // import MenuIcon from "@mui/icons-material/Menu";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import FollowTheSignsIcon from "@mui/icons-material/FollowTheSigns";
-import LoginIcon from "@mui/icons-material/Login";
-import LogoutIcon from "@mui/icons-material/Logout";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
   AppBar,
-  Badge,
+  // Badge,
   Box,
   IconButton,
   Menu,
@@ -31,9 +26,10 @@ import { authApi } from "@/utils/firebase/auth";
 
 import NavButtons from "./NavButtons";
 // import InputField from "../InputField";
-import { StyledNavbar } from "./StyledNavbar";
+import { MobMenuBtn, StyledNavbar } from "./StyledNavbar";
 
-function MainNavbar({ notificationBadgeContent = 1 }) {
+// props : { notificationBadgeContent = 1 }
+function MainNavbar() {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -79,18 +75,27 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
       onClose={handleMobileMenuClose}
       sx={{ zIndex: 9999 }}
     >
-      {state?.user && (
+      {/* {state?.user && (
         <MenuItem onClick={handleMobileMenuClose}>
-          <IconButton
-            size="large"
-            aria-label="show 17 new notifications"
-            color="inherit"
-          >
-            <Badge badgeContent={notificationBadgeContent} color="error">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <p>Notifications</p>
+          <MobMenuBtn>
+            <p>Notifications</p>
+            <Badge
+              badgeContent={notificationBadgeContent}
+              color="error"
+            ></Badge>
+          </MobMenuBtn>
+        </MenuItem>
+      )} */}
+      {state?.user && (
+        <MenuItem
+          onClick={() => {
+            handleMobileMenuClose();
+            router.push(`${app_routes.explore}`);
+          }}
+        >
+          <MobMenuBtn>
+            <p>Home</p>
+          </MobMenuBtn>
         </MenuItem>
       )}
       {state?.user && (
@@ -100,10 +105,9 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
             router.push(`${app_routes.profile}/${state?.user?.email}`);
           }}
         >
-          <IconButton size="large" color="inherit">
-            <AccountCircle />
-          </IconButton>
-          <p>Profile</p>
+          <MobMenuBtn>
+            <p>Profile</p>
+          </MobMenuBtn>
         </MenuItem>
       )}
       {state?.user && (
@@ -113,10 +117,9 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
             onClickLogout();
           }}
         >
-          <IconButton size="large" color="inherit">
-            <LogoutIcon />
-          </IconButton>
-          <p>Log Out</p>
+          <MobMenuBtn>
+            <p>Logout</p>
+          </MobMenuBtn>
         </MenuItem>
       )}
 
@@ -127,10 +130,9 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
             sendToRoute(app_routes.login);
           }}
         >
-          <IconButton size="large" color="inherit">
-            <LoginIcon />
-          </IconButton>
-          <p>Login</p>
+          <MobMenuBtn>
+            <p>Login</p>
+          </MobMenuBtn>
         </MenuItem>
       )}
 
@@ -141,10 +143,9 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
             sendToRoute(app_routes.signup);
           }}
         >
-          <IconButton size="large" color="inherit">
-            <FollowTheSignsIcon />
-          </IconButton>
-          <p>Sign Up</p>
+          <MobMenuBtn>
+            <p>Sign Up</p>
+          </MobMenuBtn>
         </MenuItem>
       )}
     </Menu>
@@ -216,6 +217,7 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
                 aria-haspopup="true"
                 onClick={handleMobileMenuOpen}
                 color="inherit"
+                sx={{ justifyContent: "flex-end" }}
               >
                 <MoreVertIcon />
               </IconButton>

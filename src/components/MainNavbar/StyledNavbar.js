@@ -22,3 +22,10 @@ export const StyledNavbar = styled.section`
     }
   }
 `;
+
+export const MobMenuBtn = styled.section`
+  min-width: 7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
