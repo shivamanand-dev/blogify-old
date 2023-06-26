@@ -1,8 +1,18 @@
 import DoneIcon from "@mui/icons-material/Done";
 import EditIcon from "@mui/icons-material/Edit";
 import { Typography } from "@mui/material";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import Picture from "@/components/Picture";
+import {
+  setLoading,
+  setOpenUploadPictureModal,
+  setUser,
+} from "@/redux/userSlice";
+import { storageServices } from "@/utils/firebase/services/storageServices";
+import { userServices } from "@/utils/firebase/services/userServices";
+import { createFileName } from "@/utils/utility/createFileName";
 
 import { PrimaryButton } from "../Buttons";
 import { StyledUserAccountInfo } from "./StyledUserAccountInfo";
@@ -19,11 +29,56 @@ function UserAccountInfo({
   switchProfileModal,
   displayName,
   showEditBtn = false,
+  profileImageTitle,
 }) {
+  const dispatch = useDispatch();
+
+  const [fileType, setFileType] = useState();
+  const [newPictureFile, setNewPictureFile] = useState();
+
+  const onSubmit = async () => {
+    dispatch(setLoading(true));
+
+    const deleteImage = await storageServices.deleteFromFirebase(
+      "profile",
+      profileImageTitle
+    );
+
+    if (deleteImage.success) {
+      const fileName = await createFileName();
+      const imageUploadRes = await storageServices.uploadToFirebase(
+        newPictureFile,
+        fileName,
+        "profile",
+        fileType
+      );
+
+      await userServices.updateUser(email, {
+        profileImageUrl: imageUploadRes,
+        profileImageTitle: fileName,
+      });
+
+      const updatedUserData = await userServices.getUser(email);
+
+      dispatch(setUser(updatedUserData));
+    } else {
+      alert(deleteImage);
+    }
+
+    dispatch(setOpenUploadPictureModal(false));
+    dispatch(setLoading(false));
+  };
   return (
     <StyledUserAccountInfo>
       <div className="flex">
-        <Picture src={src} rounded={true} />
+        <Picture
+          src={src}
+          rounded={true}
+          onSubmit={onSubmit}
+          setFileType={setFileType}
+          setNewPictureFile={setNewPictureFile}
+          newPictureFile={newPictureFile}
+        />
         <div>
           {!editProfile && (
             <Typography variant="h4" ml={3}>

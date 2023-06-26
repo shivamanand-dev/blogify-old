@@ -25,7 +25,7 @@ import { setUser, userState } from "@/redux/userSlice";
 import { app_routes } from "@/utils/constants/app_constants";
 import { authApi } from "@/utils/firebase/auth";
 
-import InputField from "../InputField";
+// import InputField from "../InputField";
 import { StyledNavbar } from "./StyledNavbar";
 
 function MainNavbar({ notificationBadgeContent = 1 }) {
@@ -209,7 +209,7 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
 
               {state?.user && (
                 <>
-                  <InputField placeholder="Search Email" />
+                  {/* <InputField placeholder="Search Email" /> */}
 
                   <IconButton
                     size="large"
