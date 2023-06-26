@@ -29,6 +29,7 @@ function UserAccountInfo({
   switchProfileModal,
   displayName,
   showEditBtn = false,
+  profileImageTitle,
 }) {
   const dispatch = useDispatch();
 
@@ -37,19 +38,33 @@ function UserAccountInfo({
 
   const onSubmit = async () => {
     dispatch(setLoading(true));
-    const fileName = await createFileName();
-    const imageUploadRes = await storageServices.uploadToFirebase(
-      newPictureFile,
-      fileName,
+
+    const deleteImage = await storageServices.deleteFromFirebase(
       "profile",
-      fileType
+      profileImageTitle
     );
 
-    await userServices.updateUser(email, { profileImageUrl: imageUploadRes });
+    if (deleteImage.success) {
+      const fileName = await createFileName();
+      const imageUploadRes = await storageServices.uploadToFirebase(
+        newPictureFile,
+        fileName,
+        "profile",
+        fileType
+      );
 
-    const updatedUserData = await userServices.getUser(email);
+      await userServices.updateUser(email, {
+        profileImageUrl: imageUploadRes,
+        profileImageTitle: fileName,
+      });
 
-    dispatch(setUser(updatedUserData));
+      const updatedUserData = await userServices.getUser(email);
+
+      dispatch(setUser(updatedUserData));
+    } else {
+      alert(deleteImage);
+    }
+
     dispatch(setOpenUploadPictureModal(false));
     dispatch(setLoading(false));
   };

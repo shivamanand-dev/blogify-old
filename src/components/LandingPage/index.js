@@ -1,5 +1,7 @@
 import { useRouter } from "next/router";
 
+import { app_routes } from "@/utils/constants/app_constants";
+
 import { PrimaryButton } from "../Buttons";
 import { StyledLandingPage } from "./StyledLandingPage";
 
@@ -13,7 +15,7 @@ function LandingPage() {
         <PrimaryButton
           buttonText="Join now"
           onClick={() => {
-            router.push("/login");
+            router.push(app_routes.login);
           }}
         />
       </div>
