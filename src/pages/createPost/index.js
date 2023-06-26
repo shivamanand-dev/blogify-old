@@ -66,6 +66,11 @@ function CreatePost() {
         lastEdited: firestoreApi.now,
         email: userStateData?.user?.email,
         uid: userStateData?.user?.uid,
+        comments: [],
+        claps: 0,
+        tags: ["sad", "happy"],
+        bookmarks: [],
+        clicks: 0,
       });
 
       const blogsData = await blogServices.getBlog(
