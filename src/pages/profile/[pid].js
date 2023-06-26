@@ -124,7 +124,7 @@ function Profile() {
                 <BlogsPostCard
                   key={e.id}
                   title={e.data.title}
-                  content={e.data.content}
+                  description={e.data.description}
                   uid={e.id}
                   email={userData?.displayName || e.data.email}
                 />

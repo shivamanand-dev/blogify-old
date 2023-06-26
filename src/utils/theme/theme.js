@@ -4,6 +4,11 @@ export const COLORS = {
   BLUE_COLOR_A: "#415A77",
   BLUE_COLOR_B: "#778DA9",
   LIGHTS_COLOR: "#E0E1DD",
+  WARNING_COLOR_A: "#F4D06F",
+  WARNING_COLOR_B: "#ED7331",
+  ERROR_COLOR_A: "#450c0c",
+  ERROR_COLOR_B: "#450c0c",
+  ERROR_COLOR_C: "#450c0c",
 };
 
 export const FONT_SIZES = {

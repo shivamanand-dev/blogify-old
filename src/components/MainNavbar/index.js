@@ -156,9 +156,12 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
         key={e.name}
         title={e.name}
         onClick={() => {
-          if (e.name === "Logout" ? onClickLogout() : router.push(e.route));
+          e.name === "Logout"
+            ? onClickLogout()
+            : e.name === "Profile"
+            ? router.push(`${e.route}/${state?.user?.email}`)
+            : router.push(e.route);
         }}
-        // ariaControls={menuId}
       />
     );
   }
@@ -168,7 +171,7 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar
           position="static"
-          sx={{ background: "#1B263B", color: "#e0e1dd" }}
+          sx={{ background: "#1B263B", color: "#E0E1DD" }}
         >
           <Toolbar>
             <Typography
