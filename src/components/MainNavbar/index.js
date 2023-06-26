@@ -1,7 +1,6 @@
 // import { MenuIcon, SearchIcon } from "@mui/icons-material";
 // import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import BungalowIcon from "@mui/icons-material/Bungalow";
 import FollowTheSignsIcon from "@mui/icons-material/FollowTheSigns";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -22,9 +21,15 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setUser, userState } from "@/redux/userSlice";
-import { app_routes } from "@/utils/constants/app_constants";
+import {
+  app_routes,
+  loggedInAndOutNavButtons,
+  loggedInNavButtons,
+  loggedOutNavButtons,
+} from "@/utils/constants/app_constants";
 import { authApi } from "@/utils/firebase/auth";
 
+import NavButtons from "./NavButtons";
 // import InputField from "../InputField";
 import { StyledNavbar } from "./StyledNavbar";
 
@@ -55,8 +60,6 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
     dispatch(setUser(null));
     router.push("/login");
   }
-
-  const menuId = "primary-search-account-menu";
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -147,6 +150,19 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
     </Menu>
   );
 
+  function renderNavButton(e) {
+    return (
+      <NavButtons
+        key={e.name}
+        title={e.name}
+        onClick={() => {
+          if (e.name === "Logout" ? onClickLogout() : router.push(e.route));
+        }}
+        // ariaControls={menuId}
+      />
+    );
+  }
+
   return (
     <StyledNavbar>
       <Box sx={{ flexGrow: 1 }}>
@@ -168,87 +184,24 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <IconButton size="large" color="inherit" className="bunglowBtn">
-                <BungalowIcon
-                  size="large"
-                  edge="end"
-                  onClick={() => {
-                    router.push(app_routes.explore);
-                  }}
-                  sx={{ padding: 0 }}
-                />
-              </IconButton>
+              {loggedInAndOutNavButtons.map((e) => {
+                return renderNavButton(e);
+              })}
 
               {!state?.user && (
                 <>
-                  <IconButton
-                    size="large"
-                    edge="end"
-                    onClick={() => {
-                      sendToRoute(app_routes.login);
-                    }}
-                    color="inherit"
-                  >
-                    <LoginIcon />
-                  </IconButton>
-                  <IconButton
-                    size="large"
-                    edge="end"
-                    aria-label="account of current user"
-                    aria-controls={menuId}
-                    aria-haspopup="true"
-                    onClick={() => {
-                      sendToRoute(app_routes.signup);
-                    }}
-                    color="inherit"
-                  >
-                    <FollowTheSignsIcon />
-                  </IconButton>
+                  {loggedOutNavButtons.map((e) => {
+                    return renderNavButton(e);
+                  })}
                 </>
               )}
 
               {state?.user && (
                 <>
                   {/* <InputField placeholder="Search Email" /> */}
-
-                  <IconButton
-                    size="large"
-                    aria-label="show 17 new notifications"
-                    color="inherit"
-                  >
-                    <Badge badgeContent={17} color="error">
-                      <NotificationsIcon />
-                    </Badge>
-                  </IconButton>
-                  <IconButton
-                    size="large"
-                    edge="end"
-                    aria-label="account of current user"
-                    aria-controls={menuId}
-                    aria-haspopup="true"
-                    onClick={() => {
-                      router.push(
-                        `${app_routes.profile}/${state?.user?.email}`
-                      );
-                    }}
-                    color="inherit"
-                  >
-                    <AccountCircle />
-                  </IconButton>
-
-                  <IconButton
-                    size="large"
-                    edge="end"
-                    aria-label="login"
-                    // aria-controls={menuId}
-                    aria-haspopup="true"
-                    onClick={() => {
-                      onClickLogout();
-                    }}
-                    color="inherit"
-                  >
-                    <LogoutIcon />
-                  </IconButton>
+                  {loggedInNavButtons.map((e) => {
+                    return renderNavButton(e);
+                  })}
                 </>
               )}
             </Box>

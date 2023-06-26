@@ -8,4 +8,8 @@ export const StyledNavbar = styled.section`
   .bunglowBtn {
     padding: 0 !important;
   }
+  button {
+    min-width: 6rem;
+    margin-left: 1rem;
+  }
 `;
