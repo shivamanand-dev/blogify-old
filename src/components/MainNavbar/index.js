@@ -74,6 +74,7 @@ function MainNavbar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
       sx={{ zIndex: 9999 }}
+      className="mobMenuItem"
     >
       {/* {state?.user && (
         <MenuItem onClick={handleMobileMenuClose}>

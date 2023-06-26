@@ -9,4 +9,11 @@ export const StyledPicture = styled.section`
     object-position: top;
     cursor: pointer;
   }
+
+  @media all and (max-width: 768px) {
+    .image {
+      height: 125px;
+      width: 125px;
+    }
+  }
 `;

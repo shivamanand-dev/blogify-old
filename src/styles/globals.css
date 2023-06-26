@@ -150,3 +150,14 @@ body {
 ::-webkit-scrollbar {
   display: none;
 }
+
+.mobMenuItem ul {
+  background-color: #0d1b2a;
+  color: #e0e1dd;
+}
+
+@media all and (max-width: 768px) {
+  html {
+    font-size: 12px;
+  }
+}
