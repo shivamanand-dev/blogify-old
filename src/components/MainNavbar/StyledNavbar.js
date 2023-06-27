@@ -8,4 +8,24 @@ export const StyledNavbar = styled.section`
   .bunglowBtn {
     padding: 0 !important;
   }
+  button {
+    min-width: 6rem;
+    margin-left: 2rem;
+    border-color: ${({ theme }) => theme.COLORS.LIGHTS_COLOR};
+    color: ${({ theme }) => theme.COLORS.LIGHTS_COLOR};
+    transition: border ease-in-out 0.3s, box-shadow ease-in-out 0.3s;
+
+    :hover {
+      border-color: ${({ theme }) => theme.COLORS.WARNING_COLOR_B};
+      box-shadow: 0 0 10px 1px #ed7331;
+      opacity: 0.9;
+    }
+  }
+`;
+
+export const MobMenuBtn = styled.section`
+  min-width: 7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;

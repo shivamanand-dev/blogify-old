@@ -1,5 +1,5 @@
-import DoneIcon from "@mui/icons-material/Done";
-import EditIcon from "@mui/icons-material/Edit";
+// import DoneIcon from "@mui/icons-material/Done";
+// import EditIcon from "@mui/icons-material/Edit";
 import { Typography } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -14,21 +14,21 @@ import { storageServices } from "@/utils/firebase/services/storageServices";
 import { userServices } from "@/utils/firebase/services/userServices";
 import { createFileName } from "@/utils/utility/createFileName";
 
-import { PrimaryButton } from "../Buttons";
+// import { PrimaryButton } from "../Buttons";
 import { StyledUserAccountInfo } from "./StyledUserAccountInfo";
 
 function UserAccountInfo({
   src,
   name,
   email,
-  follower,
-  following,
-  onClickSaveName,
-  setDisplayName,
+  // follower,
+  // following,
+  // onClickSaveName,
+  // setDisplayName,
   editProfile,
-  switchProfileModal,
-  displayName,
-  showEditBtn = false,
+  // switchProfileModal,
+  // displayName,
+  // showEditBtn = false,
   profileImageTitle,
 }) {
   const dispatch = useDispatch();
@@ -70,7 +70,7 @@ function UserAccountInfo({
   };
   return (
     <StyledUserAccountInfo>
-      <div className="flex">
+      <div className="flex container">
         <Picture
           src={src}
           rounded={true}
@@ -79,21 +79,21 @@ function UserAccountInfo({
           setNewPictureFile={setNewPictureFile}
           newPictureFile={newPictureFile}
         />
-        <div>
+        <div className="nameEmailContainer">
           {!editProfile && (
             <Typography variant="h4" ml={3}>
               {name}
-              {showEditBtn && (
+              {/* {showEditBtn && (
                 <PrimaryButton
                   buttonText=""
                   onClick={switchProfileModal}
                   startIcon={<EditIcon />}
                   variant="text"
                 />
-              )}
+              )} */}
             </Typography>
           )}
-          {editProfile && (
+          {/* {editProfile && (
             <>
               <input
                 type="text"
@@ -110,7 +110,7 @@ function UserAccountInfo({
                 variant="text"
               />
             </>
-          )}
+          )} */}
 
           <Typography variant="h6" ml={3}>
             {email}
@@ -118,14 +118,14 @@ function UserAccountInfo({
         </div>
       </div>
 
-      <div className="flex" style={{ marginTop: 15 }}>
+      {/* <div className="flex" style={{ marginTop: 15 }}>
         <Typography variant="h6" ml={3}>
           Follower: {follower}
         </Typography>
-        <Typography variant="h6" ml={3}>
+        <Typography variant="h6" ml={3} className="following">
           Following: {following}
         </Typography>
-      </div>
+      </div> */}
     </StyledUserAccountInfo>
   );
 }
