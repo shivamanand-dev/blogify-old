@@ -119,16 +119,8 @@ function Profile() {
         </div>
         <div className="posts-container">
           <div className="posts">
-            {blogsData?.map((e) => {
-              return (
-                <BlogsPostCard
-                  key={e.id}
-                  title={e.data.title}
-                  description={e.data.description}
-                  uid={e.id}
-                  email={userData?.displayName || e.data.email}
-                />
-              );
+            {blogsData?.map((e, i) => {
+              return <BlogsPostCard key={i} data={e.data} id={e.id} />;
             })}
           </div>
         </div>

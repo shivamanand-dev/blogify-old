@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Foldit:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alef:wght@400;700&family=Bruno+Ace+SC&family=Foldit:wght@300;400;500&family=Khula:wght@300;400;600;700;800&family=Ysabeau+Infant:ital,wght@0,1;0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,1;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
 
 html,
 body,
@@ -114,14 +114,19 @@ table {
 
 /* Custom CSS */
 body {
-  background: #0e0e0e;
+  background: #18191c;
   margin: 0;
   color: #e0e1dd;
+  font-family: "Khula", sans-serif;
 }
 
 .flex {
   display: flex;
   align-items: center;
+}
+
+.space-between {
+  justify-content: space-between;
 }
 
 .alignItemsTop {
