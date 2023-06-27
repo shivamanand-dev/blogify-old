@@ -6,7 +6,6 @@ function NavButtons({ title, onClick }) {
       buttonText={title}
       variant="outlined"
       onClick={onClick}
-      color="info"
       customStyle={{ fontWeight: "700" }}
     />
   );
