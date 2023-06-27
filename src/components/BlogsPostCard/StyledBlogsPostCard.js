@@ -43,6 +43,12 @@ export const StyledBlogsPostCard = styled.section`
       border: none;
       padding: 0;
       min-width: 10px;
+      border-bottom: 1px solid;
+      border-radius: 0;
+      border-color: transparent;
+      :hover {
+        border-color: #e0e1dd;
+      }
     }
   }
   .MuiCard-root {
