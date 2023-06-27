@@ -49,17 +49,10 @@ function ExplorePage() {
           </p>
         }
       >
-        {blogsData?.map((e, i) => {
-          return (
-            <BlogsPostCard
-              key={i}
-              title={e.data.title}
-              description={e.data.description}
-              uid={e.id}
-              email={e.data.email}
-            />
-          );
-        })}
+        {blogsData &&
+          blogsData?.map((e, i) => {
+            return <BlogsPostCard key={i} data={e.data} id={e.id} />;
+          })}
       </InfiniteScroll>
     </StyledExplorePage>
   );

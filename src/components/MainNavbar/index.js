@@ -1,15 +1,9 @@
 // import { MenuIcon, SearchIcon } from "@mui/icons-material";
 // import MenuIcon from "@mui/icons-material/Menu";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import BungalowIcon from "@mui/icons-material/Bungalow";
-import FollowTheSignsIcon from "@mui/icons-material/FollowTheSigns";
-import LoginIcon from "@mui/icons-material/Login";
-import LogoutIcon from "@mui/icons-material/Logout";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
   AppBar,
-  Badge,
+  // Badge,
   Box,
   IconButton,
   Menu,
@@ -22,13 +16,20 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setUser, userState } from "@/redux/userSlice";
-import { app_routes } from "@/utils/constants/app_constants";
+import {
+  app_routes,
+  loggedInAndOutNavButtons,
+  loggedInNavButtons,
+  loggedOutNavButtons,
+} from "@/utils/constants/app_constants";
 import { authApi } from "@/utils/firebase/auth";
 
+import NavButtons from "./NavButtons";
 // import InputField from "../InputField";
-import { StyledNavbar } from "./StyledNavbar";
+import { MobMenuBtn, StyledNavbar } from "./StyledNavbar";
 
-function MainNavbar({ notificationBadgeContent = 1 }) {
+// props : { notificationBadgeContent = 1 }
+function MainNavbar() {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -56,8 +57,6 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
     router.push("/login");
   }
 
-  const menuId = "primary-search-account-menu";
-
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
@@ -75,19 +74,29 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
       sx={{ zIndex: 9999 }}
+      className="mobMenuItem"
     >
-      {state?.user && (
+      {/* {state?.user && (
         <MenuItem onClick={handleMobileMenuClose}>
-          <IconButton
-            size="large"
-            aria-label="show 17 new notifications"
-            color="inherit"
-          >
-            <Badge badgeContent={notificationBadgeContent} color="error">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <p>Notifications</p>
+          <MobMenuBtn>
+            <p>Notifications</p>
+            <Badge
+              badgeContent={notificationBadgeContent}
+              color="error"
+            ></Badge>
+          </MobMenuBtn>
+        </MenuItem>
+      )} */}
+      {state?.user && (
+        <MenuItem
+          onClick={() => {
+            handleMobileMenuClose();
+            router.push(`${app_routes.explore}`);
+          }}
+        >
+          <MobMenuBtn>
+            <p>Home</p>
+          </MobMenuBtn>
         </MenuItem>
       )}
       {state?.user && (
@@ -97,10 +106,9 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
             router.push(`${app_routes.profile}/${state?.user?.email}`);
           }}
         >
-          <IconButton size="large" color="inherit">
-            <AccountCircle />
-          </IconButton>
-          <p>Profile</p>
+          <MobMenuBtn>
+            <p>Profile</p>
+          </MobMenuBtn>
         </MenuItem>
       )}
       {state?.user && (
@@ -110,10 +118,9 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
             onClickLogout();
           }}
         >
-          <IconButton size="large" color="inherit">
-            <LogoutIcon />
-          </IconButton>
-          <p>Log Out</p>
+          <MobMenuBtn>
+            <p>Logout</p>
+          </MobMenuBtn>
         </MenuItem>
       )}
 
@@ -124,10 +131,9 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
             sendToRoute(app_routes.login);
           }}
         >
-          <IconButton size="large" color="inherit">
-            <LoginIcon />
-          </IconButton>
-          <p>Login</p>
+          <MobMenuBtn>
+            <p>Login</p>
+          </MobMenuBtn>
         </MenuItem>
       )}
 
@@ -138,21 +144,36 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
             sendToRoute(app_routes.signup);
           }}
         >
-          <IconButton size="large" color="inherit">
-            <FollowTheSignsIcon />
-          </IconButton>
-          <p>Sign Up</p>
+          <MobMenuBtn>
+            <p>Sign Up</p>
+          </MobMenuBtn>
         </MenuItem>
       )}
     </Menu>
   );
+
+  function renderNavButton(e) {
+    return (
+      <NavButtons
+        key={e.name}
+        title={e.name}
+        onClick={() => {
+          e.name === "Logout"
+            ? onClickLogout()
+            : e.name === "Profile"
+            ? router.push(`${e.route}/${state?.user?.email}`)
+            : router.push(e.route);
+        }}
+      />
+    );
+  }
 
   return (
     <StyledNavbar>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar
           position="static"
-          sx={{ background: "#1B263B", color: "#e0e1dd" }}
+          sx={{ background: "#1B263B", color: "#E0E1DD" }}
         >
           <Toolbar>
             <Typography
@@ -168,87 +189,24 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <IconButton size="large" color="inherit" className="bunglowBtn">
-                <BungalowIcon
-                  size="large"
-                  edge="end"
-                  onClick={() => {
-                    router.push(app_routes.explore);
-                  }}
-                  sx={{ padding: 0 }}
-                />
-              </IconButton>
+              {loggedInAndOutNavButtons.map((e) => {
+                return renderNavButton(e);
+              })}
 
               {!state?.user && (
                 <>
-                  <IconButton
-                    size="large"
-                    edge="end"
-                    onClick={() => {
-                      sendToRoute(app_routes.login);
-                    }}
-                    color="inherit"
-                  >
-                    <LoginIcon />
-                  </IconButton>
-                  <IconButton
-                    size="large"
-                    edge="end"
-                    aria-label="account of current user"
-                    aria-controls={menuId}
-                    aria-haspopup="true"
-                    onClick={() => {
-                      sendToRoute(app_routes.signup);
-                    }}
-                    color="inherit"
-                  >
-                    <FollowTheSignsIcon />
-                  </IconButton>
+                  {loggedOutNavButtons.map((e) => {
+                    return renderNavButton(e);
+                  })}
                 </>
               )}
 
               {state?.user && (
                 <>
                   {/* <InputField placeholder="Search Email" /> */}
-
-                  <IconButton
-                    size="large"
-                    aria-label="show 17 new notifications"
-                    color="inherit"
-                  >
-                    <Badge badgeContent={17} color="error">
-                      <NotificationsIcon />
-                    </Badge>
-                  </IconButton>
-                  <IconButton
-                    size="large"
-                    edge="end"
-                    aria-label="account of current user"
-                    aria-controls={menuId}
-                    aria-haspopup="true"
-                    onClick={() => {
-                      router.push(
-                        `${app_routes.profile}/${state?.user?.email}`
-                      );
-                    }}
-                    color="inherit"
-                  >
-                    <AccountCircle />
-                  </IconButton>
-
-                  <IconButton
-                    size="large"
-                    edge="end"
-                    aria-label="login"
-                    // aria-controls={menuId}
-                    aria-haspopup="true"
-                    onClick={() => {
-                      onClickLogout();
-                    }}
-                    color="inherit"
-                  >
-                    <LogoutIcon />
-                  </IconButton>
+                  {loggedInNavButtons.map((e) => {
+                    return renderNavButton(e);
+                  })}
                 </>
               )}
             </Box>
@@ -260,6 +218,7 @@ function MainNavbar({ notificationBadgeContent = 1 }) {
                 aria-haspopup="true"
                 onClick={handleMobileMenuOpen}
                 color="inherit"
+                sx={{ justifyContent: "flex-end" }}
               >
                 <MoreVertIcon />
               </IconButton>
