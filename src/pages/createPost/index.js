@@ -66,7 +66,22 @@ function CreatePost() {
         lastEdited: firestoreApi.now,
         email: userStateData?.user?.email,
         uid: userStateData?.user?.uid,
-        comments: [],
+        comments: [
+          {
+            uid: "sfdfdsf43fdf34rf",
+            message: "Awesome",
+            likes: 0,
+            postedAt: firestoreApi.now,
+            reply: [
+              {
+                uid: "sfdfdsf43fdf34rf",
+                message: "Reply",
+                likes: 0,
+                postedAt: firestoreApi.now,
+              },
+            ],
+          },
+        ],
         claps: 0,
         tags: ["sad", "happy"],
         bookmarks: [],
