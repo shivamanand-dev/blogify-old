@@ -1,49 +1,16 @@
 import { Chip, Stack } from "@mui/material";
 
-import { StyledStckChip } from "./StyledStckChip";
+import { tagsData } from "../data/tags";
+import { StyledStackChip } from "./StyledStckChip";
 
-const StckChip = ({
+const StackChip = ({
   selectedHashTags = [],
   onClickTagsChip,
-  tags = [
-    "Technology",
-    "Business",
-    "Entrepreneurship",
-    "Finance",
-    "Marketing",
-    "Social Media",
-    "Health & Wellness",
-    "Fitness",
-    "Nutrition",
-    "Mental Health",
-    "Lifestyle",
-    "Travel",
-    "Food & Recipes",
-    "Beauty",
-    "Fashion",
-    "Personal Development",
-    "Relationships",
-    "Education",
-    "Entertainment",
-    "News",
-    "Sports",
-    "Culture",
-    "Arts & Crafts",
-    "Photography",
-    "Writing",
-    "Books & Literature",
-    "Music",
-    "Film & TV",
-    "Science",
-    "Environment",
-    "Politics",
-    "History",
-    "Religion & Spirituality",
-  ],
+  tags = tagsData,
   clickable = false,
 }) => {
   return (
-    <StyledStckChip>
+    <StyledStackChip>
       <Stack direction="row" sx={{ flexWrap: "wrap" }} gap={1}>
         {tags.map((e) => {
           return (
@@ -59,8 +26,8 @@ const StckChip = ({
           );
         })}
       </Stack>
-    </StyledStckChip>
+    </StyledStackChip>
   );
 };
 
-export default StckChip;
+export default StackChip;
