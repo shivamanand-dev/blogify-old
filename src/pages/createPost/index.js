@@ -87,7 +87,7 @@ function CreatePost() {
           },
         ],
         claps: 0,
-        tags: ["sad", "happy"],
+        tags: tags,
         bookmarks: [],
         clicks: 0,
       });
