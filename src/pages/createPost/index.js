@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { PrimaryButton } from "@/components/Buttons";
+import Dropdown from "@/components/Dropdown";
 import InputField from "@/components/InputField";
+import MultiSelectDropdown from "@/components/MultiSelectDropdown";
 import { StyledCreatePost } from "@/components/StyledPages";
 import TextArea from "@/components/TextArea";
 import TextEditor from "@/components/TextEditor";
@@ -25,6 +27,8 @@ function CreatePost() {
     heading: "",
     description: "",
   });
+
+  const [tags, setTags] = useState([]);
 
   const [currentStaticHeading, setCurrentStaticHeading] = useState({
     heading: "",
@@ -102,6 +106,10 @@ function CreatePost() {
     setBlogContent({ ...blogContent, [e.target.name]: e.target.value });
   };
 
+  const onChangeTags = (e, array) => {
+    setTags(array);
+  };
+
   useEffect(() => {
     const randomNumber = Math.floor(Math.random() * 8);
     setCurrentStaticHeading({
@@ -128,6 +136,9 @@ function CreatePost() {
         name="description"
         onChange={onChangeBlogContent}
       />
+
+      <MultiSelectDropdown onChange={onChangeTags} value={tags} />
+
       <TextEditor
         handleSaveBlog={handleSaveBlog}
         setEditorContent={setEditorContent}
@@ -148,6 +159,8 @@ function CreatePost() {
             : true
         }
       />
+
+      <Dropdown />
     </StyledCreatePost>
   );
 }
