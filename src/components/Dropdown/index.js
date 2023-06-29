@@ -4,43 +4,29 @@ import TextField from "@mui/material/TextField";
 
 import { StyledDropdown } from "./StyledDropdown";
 
-function Dropdown() {
-  const currencies = [
-    {
-      value: "USD",
-      label: "$",
-    },
-    {
-      value: "EUR",
-      label: "€",
-    },
-    {
-      value: "BTC",
-      label: "฿",
-    },
-    {
-      value: "JPY",
-      label: "¥",
-    },
-  ];
-
+function Dropdown({
+  dropdownMenu = [],
+  helperText = "",
+  label = "",
+  customStyle,
+  textFieldStyle,
+  onChange,
+  value,
+}) {
   return (
-    <StyledDropdown>
-      <Box
-        component="form"
-        sx={{ margin: "3rem" }}
-        noValidate
-        autoComplete="off"
-      >
+    <StyledDropdown style={customStyle}>
+      <Box component="form" noValidate autoComplete="off">
         <TextField
           id="standard-select-currency"
           select
-          label="Select"
-          defaultValue="EUR"
-          helperText="Please select your currency"
+          label={label}
+          helperText={helperText}
           variant="standard"
+          sx={textFieldStyle}
+          onChange={onChange}
+          value={value}
         >
-          {currencies.map((option) => (
+          {dropdownMenu.map((option) => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
