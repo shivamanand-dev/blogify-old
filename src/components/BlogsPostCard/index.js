@@ -6,8 +6,8 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { BsBookmarkPlus } from "react-icons/bs";
 import { FaRegComments } from "react-icons/fa";
-import { MdBookmarkAdd } from "react-icons/md";
 import { PiHandsClappingLight } from "react-icons/pi";
 import { useSelector } from "react-redux";
 
@@ -71,7 +71,7 @@ function BlogsPostCard({ data, id, name }) {
                 <img
                   src={
                     userData?.profileImageUrl ||
-                    userDataState.user.profileImageUrl
+                    userDataState?.user?.profileImageUrl
                   }
                   alt=""
                 />
@@ -140,7 +140,7 @@ function BlogsPostCard({ data, id, name }) {
             {/* {tags} */}
           </div>
           <IconButton sx={{ color: "#778DA9" }} className="claps">
-            <MdBookmarkAdd
+            <BsBookmarkPlus
               fontSize={24}
               style={{ marginRight: "0.5rem" }}
               color="#E0E1DD"
