@@ -19,7 +19,7 @@ const db = getFirestore(app);
 
 const createBlog = async (data) => {
   const collectionRef = collection(db, fireStoreCollections.blogs);
-  await addDoc(collectionRef, data);
+  return await addDoc(collectionRef, data);
 };
 
 const getBlog = async (condition, postLimit) => {
@@ -67,13 +67,9 @@ const getSinglePost = async (uid) => {
 const updateBlog = async (uid, data) => {
   const docRef = doc(db, fireStoreCollections.blogs, uid);
 
-  return await updateDoc(docRef, data)
-    .then(() => {
-      alert("Subcollection document updated successfully.");
-    })
-    .catch((error) => {
-      console.error("Error updating subcollection document: ", error);
-    });
+  return await updateDoc(docRef, data).catch((error) => {
+    console.error("Error updating Blog: ", error);
+  });
 };
 
 export const blogServices = { createBlog, getBlog, updateBlog, getSinglePost };

@@ -8,9 +8,8 @@ function TextEditor({ editorContent, isPreview = false, onChange }) {
   const editorConfig = {
     plugins:
       "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
-    toolbar: isPreview
-      ? ""
-      : "undo redo | emoticons | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | charmap | removeformat",
+    toolbar:
+      "undo redo | emoticons | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | charmap | removeformat",
     resize: true,
     skin: "oxide-dark",
     content_css: "dark",

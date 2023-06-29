@@ -35,6 +35,10 @@ function BlogPost() {
       value: "private",
       label: "Private",
     },
+    {
+      value: "draft",
+      label: "Draft",
+    },
   ];
 
   const [blogPostData, setBlogPostData] = useState();
@@ -45,11 +49,12 @@ function BlogPost() {
     description: "",
   });
   const [tags, setTags] = useState([]);
-  const [postType, setPostType] = useState("public");
+  const [postType, setPostType] = useState("draft");
   const [currentStaticHeading, setCurrentStaticHeading] = useState({
     heading: "",
     label: "",
   });
+  const [docId, setDocId] = useState();
 
   const onChangeBlogContent = (e) => {
     setBlogContent({ ...blogContent, [e.target.name]: e.target.value });
@@ -65,12 +70,24 @@ function BlogPost() {
 
   const getBlogData = async (uid) => {
     dispatch(setLoading(true));
+
     const data = await blogServices.getSinglePost(uid);
+
     setBlogPostData(data);
     setEditorContent(data?.content);
+    setBlogContent({
+      ...blogContent,
+      heading: data?.title,
+      description: data?.description,
+    });
+
+    setTags(data?.tags);
+    setPostType(data?.postType);
     setIsEditable(
       user?.uid === data?.uid
         ? data?.postType === "private"
+          ? true
+          : data?.postType === "draft"
           ? true
           : false
         : false
@@ -85,7 +102,7 @@ function BlogPost() {
       blogContent.heading.length !== 0 &&
       blogContent.description.length !== 0
     ) {
-      await blogServices.createBlog({
+      await blogServices.updateBlog(docId, {
         title: blogContent.heading,
         description: blogContent.description,
         content: editorContent,
@@ -145,6 +162,7 @@ function BlogPost() {
   useEffect(() => {
     if (pid) {
       getBlogData(pid);
+      setDocId(pid);
     }
   }, [pid]);
 
@@ -211,9 +229,9 @@ function BlogPost() {
             customStyle={{ marginTop: "2rem", width: "45%" }}
             disabled={
               editorContent
-                ? blogContent.heading.length !== 0
-                  ? blogContent.description.length !== 0
-                    ? tags.length !== 0
+                ? blogContent?.heading?.length !== 0
+                  ? blogContent?.description?.length !== 0
+                    ? tags?.length !== 0
                       ? false
                       : true
                     : true
