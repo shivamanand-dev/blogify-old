@@ -4,18 +4,12 @@ import { tinyMCE } from "@/utils/constants/app_config";
 
 import { StyledBlogPreview } from "./StyledBlogPreview";
 
-function TextEditor({
-  setEditorContent,
-  editorContent,
-  isPreview = false,
-  content,
-}) {
+function TextEditor({ editorContent, isPreview = false, onChange }) {
   const editorConfig = {
     plugins:
       "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
-    toolbar: isPreview
-      ? ""
-      : "undo redo | emoticons | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | charmap | removeformat",
+    toolbar:
+      "undo redo | emoticons | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | charmap | removeformat",
     resize: true,
     skin: "oxide-dark",
     content_css: "dark",
@@ -36,16 +30,12 @@ function TextEditor({
     keep_styles: true,
   };
 
-  const handleEditorChange = (content) => {
-    setEditorContent(content);
-  };
-
   return (
     <StyledBlogPreview isPreview={isPreview}>
       <Editor
         init={editorConfig}
-        onEditorChange={isPreview ? () => {} : handleEditorChange}
-        value={isPreview ? content : editorContent}
+        onEditorChange={isPreview ? () => {} : onChange}
+        value={editorContent}
         apiKey={tinyMCE}
         disabled={isPreview ? true : false}
       />
