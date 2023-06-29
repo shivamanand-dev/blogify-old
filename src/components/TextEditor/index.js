@@ -16,7 +16,7 @@ function TextEditor({
     toolbar: isPreview
       ? ""
       : "undo redo | emoticons | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | charmap | removeformat",
-    resize: false,
+    resize: true,
     skin: "oxide-dark",
     content_css: "dark",
     codesample_languages: [

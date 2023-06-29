@@ -1,3 +1,3 @@
 import styled from "styled-components";
 
-export const StyledStckChip = styled.section``;
+export const StyledStackChip = styled.section``;

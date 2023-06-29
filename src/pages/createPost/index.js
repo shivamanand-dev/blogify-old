@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { PrimaryButton } from "@/components/Buttons";
+import Dropdown from "@/components/Dropdown";
 import InputField from "@/components/InputField";
+import MultiSelectDropdown from "@/components/MultiSelectDropdown";
 import { StyledCreatePost } from "@/components/StyledPages";
 import TextArea from "@/components/TextArea";
 import TextEditor from "@/components/TextEditor";
@@ -20,11 +22,25 @@ function CreatePost() {
   const dispatch = useDispatch();
   const userStateData = useSelector(userState);
 
+  const dropdownMenu = [
+    {
+      value: "public",
+      label: "Public",
+    },
+    {
+      value: "private",
+      label: "Private",
+    },
+  ];
+
   const [editorContent, setEditorContent] = useState();
   const [blogContent, setBlogContent] = useState({
     heading: "",
     description: "",
   });
+
+  const [tags, setTags] = useState([]);
+  const [postType, setPostType] = useState("public");
 
   const [currentStaticHeading, setCurrentStaticHeading] = useState({
     heading: "",
@@ -67,25 +83,30 @@ function CreatePost() {
         email: userStateData?.user?.email,
         uid: userStateData?.user?.uid,
         comments: [
-          {
-            uid: "sfdfdsf43fdf34rf",
-            message: "Awesome",
-            likes: 0,
-            postedAt: firestoreApi.now,
-            reply: [
-              {
-                uid: "sfdfdsf43fdf34rf",
-                message: "Reply",
-                likes: 0,
-                postedAt: firestoreApi.now,
-              },
-            ],
-          },
+          // {
+          //   uid: "sfdfdsf43fdf34rf",
+          //   message: "Awesome",
+          //   likes: 0,
+          //   postedAt: firestoreApi.now,
+          //   reply: [
+          //     {
+          //       uid: "sfdfdsf43fdf34rf",
+          //       message: "Reply",
+          //       likes: 0,
+          //       postedAt: firestoreApi.now,
+          //     },
+          //   ],
+          // },
         ],
-        claps: 0,
-        tags: ["sad", "happy"],
-        bookmarks: [],
+        claps: [
+          // {
+          //   uid: "sfdfdsf43fdf34rf",
+          // },
+        ],
+        tags: tags,
+        bookmarks: 0,
         clicks: 0,
+        postType: postType,
       });
 
       const blogsData = await blogServices.getBlog(
@@ -100,6 +121,14 @@ function CreatePost() {
 
   const onChangeBlogContent = (e) => {
     setBlogContent({ ...blogContent, [e.target.name]: e.target.value });
+  };
+
+  const onChangeTags = (e, array) => {
+    setTags(array);
+  };
+
+  const onChangePostType = (event, value) => {
+    setPostType(value.props.value);
   };
 
   useEffect(() => {
@@ -128,26 +157,48 @@ function CreatePost() {
         name="description"
         onChange={onChangeBlogContent}
       />
+
+      <MultiSelectDropdown
+        onChange={onChangeTags}
+        value={tags}
+        label="Tags"
+        customStyle={{ marginBottom: "1rem" }}
+        required={true}
+      />
+
       <TextEditor
         handleSaveBlog={handleSaveBlog}
         setEditorContent={setEditorContent}
         editorContent={editorContent}
       />
 
-      <PrimaryButton
-        buttonText="Publish"
-        onClick={handleSaveBlog}
-        customStyle={{ marginTop: "2rem", width: "100%" }}
-        disabled={
-          editorContent
-            ? blogContent.heading.length !== 0
-              ? blogContent.description.length !== 0
-                ? false
+      <div className="flex space-between" style={{ alignItems: "flex-start" }}>
+        <Dropdown
+          dropdownMenu={dropdownMenu}
+          label="Post"
+          customStyle={{ margin: "1rem 0", width: "45%" }}
+          textFieldStyle={{ width: "100%" }}
+          onChange={onChangePostType}
+          value={postType}
+        />
+
+        <PrimaryButton
+          buttonText="Publish"
+          onClick={handleSaveBlog}
+          customStyle={{ marginTop: "2rem", width: "45%" }}
+          disabled={
+            editorContent
+              ? blogContent.heading.length !== 0
+                ? blogContent.description.length !== 0
+                  ? tags.length !== 0
+                    ? false
+                    : true
+                  : true
                 : true
               : true
-            : true
-        }
-      />
+          }
+        />
+      </div>
     </StyledCreatePost>
   );
 }
