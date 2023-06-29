@@ -125,7 +125,7 @@ function BlogsPostCard({ data, id }) {
                 style={{ marginRight: "0.5rem" }}
                 color="#E0E1DD"
               />
-              {claps}
+              {claps.length}
             </IconButton>
 
             <IconButton sx={{ color: "#778DA9" }} className="claps">
