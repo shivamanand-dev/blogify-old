@@ -1,3 +1,4 @@
+import StarRateIcon from "@mui/icons-material/StarRate";
 import Autocomplete from "@mui/material/Autocomplete";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
@@ -6,13 +7,19 @@ import TextField from "@mui/material/TextField";
 import { tagsData } from "../data/tags";
 import { StyledMultiSelectDropdown } from "./StyledMultiSelectDropdown";
 
-function MultiSelectDropdown({ tags = tagsData, onChange, value }) {
+function MultiSelectDropdown({
+  tags = tagsData,
+  onChange,
+  value,
+  label,
+  customStyle,
+  required,
+}) {
   return (
     <StyledMultiSelectDropdown>
-      <Stack sx={{ margin: "1rem 0" }}>
+      <Stack sx={customStyle}>
         <Autocomplete
           multiple
-          id="tags-filled"
           options={tags.map((option) => option)}
           renderTags={(value, getTagProps) =>
             value.map((e, i) => (
@@ -31,7 +38,7 @@ function MultiSelectDropdown({ tags = tagsData, onChange, value }) {
             <TextField
               {...params}
               variant="filled"
-              label="freeSolo"
+              label={label}
               placeholder="Favorites"
             />
           )}
@@ -39,6 +46,7 @@ function MultiSelectDropdown({ tags = tagsData, onChange, value }) {
           onChange={onChange}
         />
       </Stack>
+      {required && <StarRateIcon className="starIcon" fontSize="5px" />}
     </StyledMultiSelectDropdown>
   );
 }

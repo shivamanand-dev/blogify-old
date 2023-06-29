@@ -165,4 +165,7 @@ body {
   html {
     font-size: 12px;
   }
+  .flex {
+    flex-direction: column;
+  }
 }

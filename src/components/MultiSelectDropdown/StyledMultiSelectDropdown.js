@@ -2,28 +2,38 @@ import styled from "styled-components";
 
 export const StyledMultiSelectDropdown = styled.section`
   color: #fff;
-  .MuiSvgIcon-root {
-    color: #fff !important;
+  display: flex;
+  width: 100%;
+  position: relative;
+
+  .MuiStack-root {
+    width: 100%;
   }
   .MuiAutocomplete-root {
     width: 100%;
   }
+
   .MuiFormControl-root,
   .MuiOutlinedInput-notchedOutline,
-  .MuiInputBase-root,
-  svg {
-    color: #fff;
-    option {
-      color: #000;
+  .MuiInputBase-root {
+    color: ${({ theme }) => theme.COLORS.LIGHTS_COLOR};
+    svg {
+      color: ${({ theme }) => theme.COLORS.LIGHTS_COLOR};
+      option {
+        color: ${({ theme }) => theme.COLORS.LIGHTS_COLOR};
+      }
     }
   }
-  .MuiFormHelperText-root {
-    color: #fff;
-  }
+
   label {
-    color: #fff;
+    color: ${({ theme }) => theme.COLORS.LIGHTS_COLOR};
   }
   .MuiInputBase-root:before {
-    border-color: #fff !important;
+    border-color: #e0e1dd !important;
+  }
+  .starIcon {
+    color: #d32f2f;
+    position: absolute;
+    right: 0;
   }
 `;
