@@ -30,7 +30,7 @@ export default function App({ Component, pageProps }) {
       if (!user && lockedRoutes.includes(router.asPath)) {
         authApi.logout();
         router.push("/login");
-      } else if (authRoutes.includes(router.asPath)) {
+      } else if (user && authRoutes.includes(router.asPath)) {
         router.push(app_routes.explore);
       }
     });
