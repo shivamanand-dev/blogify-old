@@ -65,4 +65,13 @@ export const StyledBlogsPostCard = styled.section`
     border-color: ${({ theme }) => theme.COLORS.LIGHTS_COLOR};
     justify-content: space-between;
   }
+
+  @media all and (max-width: 768px) {
+    .profileDetails {
+      flex-direction: row;
+      div {
+        flex-direction: row;
+      }
+    }
+  }
 `;
