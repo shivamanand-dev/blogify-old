@@ -37,7 +37,7 @@ export const StyledBlogsPostCard = styled.section`
   .postTags {
     margin-top: 1rem;
     button {
-      color: #e0e1dd;
+      color: ${({ theme }) => theme.COLORS.BLUE_COLOR_B};
       margin-right: 0.75rem;
       text-transform: lowercase;
       border: none;
@@ -47,7 +47,7 @@ export const StyledBlogsPostCard = styled.section`
       border-radius: 0;
       border-color: transparent;
       :hover {
-        border-color: #e0e1dd;
+        border-color: ${({ theme }) => theme.COLORS.LIGHTS_COLOR};
       }
     }
   }
