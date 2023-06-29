@@ -12,7 +12,11 @@ import { ThemeProvider } from "styled-components";
 import MainNavbar from "@/components/MainNavbar";
 import ProgressBar from "@/components/ProgressBar";
 import { persistor, store } from "@/redux/store";
-import { lockedRoutes } from "@/utils/constants/app_constants";
+import {
+  app_routes,
+  authRoutes,
+  lockedRoutes,
+} from "@/utils/constants/app_constants";
 import app from "@/utils/firebase";
 import { authApi } from "@/utils/firebase/auth";
 import theme from "@/utils/theme/theme";
@@ -22,20 +26,20 @@ export default function App({ Component, pageProps }) {
   const router = useRouter();
 
   const routeCheck = () => {
-    if (lockedRoutes.includes(router.asPath)) {
-      auth.onAuthStateChanged((user) => {
-        if (!user) {
-          authApi.logout();
-          router.push("/login");
-        }
-      });
-    }
+    auth.onAuthStateChanged((user) => {
+      if (!user && lockedRoutes.includes(router.asPath)) {
+        authApi.logout();
+        router.push("/login");
+      } else if (authRoutes.includes(router.asPath)) {
+        router.push(app_routes.explore);
+      }
+    });
   };
 
   useEffect(() => {
     routeCheck();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [router.asPath]);
 
   return (
     <Provider store={store}>
