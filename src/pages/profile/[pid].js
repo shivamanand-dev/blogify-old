@@ -120,7 +120,14 @@ function Profile() {
         <div className="posts-container">
           <div className="posts">
             {blogsData?.map((e, i) => {
-              return <BlogsPostCard key={i} data={e.data} id={e.id} />;
+              return (
+                <BlogsPostCard
+                  key={i}
+                  data={e.data}
+                  id={e.id}
+                  name={userData?.displayName}
+                />
+              );
             })}
           </div>
         </div>
