@@ -19,7 +19,7 @@ import { PrimaryButton } from "../Buttons";
 // import Parser from "html-react-parser";
 import { StyledBlogsPostCard } from "./StyledBlogsPostCard";
 
-function BlogsPostCard({ data, id }) {
+function BlogsPostCard({ data, id, name }) {
   const {
     email,
     title,
@@ -75,7 +75,7 @@ function BlogsPostCard({ data, id }) {
                   }
                   alt=""
                 />
-                <h3>{userData?.displayName || email}</h3>
+                <h3>{userData?.displayName || name || email}</h3>
               </div>
               <div>
                 <p>
