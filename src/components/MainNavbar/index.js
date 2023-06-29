@@ -87,18 +87,16 @@ function MainNavbar() {
           </MobMenuBtn>
         </MenuItem>
       )} */}
-      {state?.user && (
-        <MenuItem
-          onClick={() => {
-            handleMobileMenuClose();
-            router.push(`${app_routes.explore}`);
-          }}
-        >
-          <MobMenuBtn>
-            <p>Home</p>
-          </MobMenuBtn>
-        </MenuItem>
-      )}
+      <MenuItem
+        onClick={() => {
+          handleMobileMenuClose();
+          router.push(`${app_routes.explore}`);
+        }}
+      >
+        <MobMenuBtn>
+          <p>Home</p>
+        </MobMenuBtn>
+      </MenuItem>
       {state?.user && (
         <MenuItem
           onClick={() => {
