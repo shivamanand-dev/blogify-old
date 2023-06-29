@@ -39,12 +39,22 @@ function UserAccountInfo({
   const onSubmit = async () => {
     dispatch(setLoading(true));
 
-    const deleteImage = await storageServices.deleteFromFirebase(
-      "profile",
-      profileImageTitle
-    );
+    let deleteImage;
+    if (
+      src !==
+      "https://firebasestorage.googleapis.com/v0/b/blogify-9a1bd.appspot.com/o/anonymous.png?alt=media&token=4b23045c-6f36-4054-a026-02922bff24c6"
+    ) {
+      deleteImage = await storageServices.deleteFromFirebase(
+        "profile",
+        profileImageTitle
+      );
+    }
 
-    if (deleteImage.success) {
+    if (
+      deleteImage?.success ||
+      src ===
+        "https://firebasestorage.googleapis.com/v0/b/blogify-9a1bd.appspot.com/o/anonymous.png?alt=media&token=4b23045c-6f36-4054-a026-02922bff24c6"
+    ) {
       const fileName = await createFileName();
       const imageUploadRes = await storageServices.uploadToFirebase(
         newPictureFile,
