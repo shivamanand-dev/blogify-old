@@ -47,6 +47,35 @@ export default function App({ Component, pageProps }) {
             crossorigin="anonymous"
             lazyOnload
           ></script>
+
+          <meta
+            name="description"
+            content="Welcome to Our Blogging Community. Join thousands of writers and readers around the world."
+          ></meta>
+
+          <meta
+            name="keywords"
+            content="Blogging platform,Content management system,Blogging software,Website builder,Blog hosting,Writing platform,Content creation tool,SEO optimization,Customizable templates,User-friendly interface,Social media integration,Analytics and tracking,Mobile responsiveness,Monetization options,Community and engagement features,Multimedia support (images, videos),Search functionality,RSS feed integration,Author profiles,Commenting system"
+          ></meta>
+
+          <meta
+            name="author"
+            content="Welcome to Our Blogging Community. Join thousands of writers and readers around the world."
+          ></meta>
+
+          <meta name="robots" content="index, follow"></meta>
+          <link rel="canonical" href="https://appstorm.app/"></link>
+          <meta
+            name="og:title"
+            content="Welcome to Our Blogging Community. Join thousands of writers and readers around the world."
+          ></meta>
+          <meta
+            name="og:description"
+            content="Welcome to Our Blogging Community. Join thousands of writers and readers around the world."
+          ></meta>
+          <meta name="og:image" content=""></meta>
+
+          <title>AppStorm - Blogify</title>
         </Head>
         <ThemeProvider theme={theme}>
           <NoSsr>

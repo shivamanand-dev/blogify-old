@@ -22,4 +22,16 @@ export const StyledProfile = styled.section`
       }
     }
   }
+
+  @media all and (max-width: 768px) {
+    .sidebar {
+      display: none;
+    }
+
+    .mainContainer {
+      .posts-container {
+        width: 100%;
+      }
+    }
+  }
 `;
