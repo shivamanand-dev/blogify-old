@@ -28,6 +28,7 @@ function TextEditor({ editorContent, isPreview = false, onChange }) {
       { text: "SQL", value: "sql" },
     ],
     keep_styles: true,
+    height: 700,
   };
 
   return (
