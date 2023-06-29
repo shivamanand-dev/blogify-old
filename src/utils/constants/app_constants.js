@@ -41,3 +41,5 @@ export const loggedInAndOutNavButtons = [
 ];
 
 export const lockedRoutes = ["/profile/[pid]"];
+
+export const authRoutes = [app_routes.login, app_routes.signup];
