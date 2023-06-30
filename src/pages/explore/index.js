@@ -45,7 +45,7 @@ function ExplorePage() {
         loader={<CircularLoader />}
         endMessage={
           <p style={{ textAlign: "center" }}>
-            <b>Yay! You are all cought up</b>
+            <b>Yay! You are all caught up</b>
           </p>
         }
       >
