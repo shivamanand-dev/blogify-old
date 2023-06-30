@@ -109,27 +109,6 @@ function BlogPost() {
         lastEdited: firestoreApi.now,
         email: userStateData?.user?.email,
         uid: userStateData?.user?.uid,
-        comments: [
-          // {
-          //   uid: "sfdfdsf43fdf34rf",
-          //   message: "Awesome",
-          //   likes: 0,
-          //   postedAt: firestoreApi.now,
-          //   reply: [
-          //     {
-          //       uid: "sfdfdsf43fdf34rf",
-          //       message: "Reply",
-          //       likes: 0,
-          //       postedAt: firestoreApi.now,
-          //     },
-          //   ],
-          // },
-        ],
-        claps: [
-          // {
-          //   uid: "sfdfdsf43fdf34rf",
-          // },
-        ],
         tags: tags,
         bookmarks: 0,
         clicks: 0,
