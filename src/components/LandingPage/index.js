@@ -17,9 +17,7 @@ function LandingPage() {
         <h1>Welcome to Our Blogging Community</h1>
         <h2>Join thousands of writers and readers around the world</h2>
         <PrimaryButton
-          buttonText={() => {
-            user ? "Explore" : "Join Now";
-          }}
+          buttonText={user ? "Explore" : "Join Now"}
           onClick={() => {
             user
               ? router.push(app_routes.explore)
